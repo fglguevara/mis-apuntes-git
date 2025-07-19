@@ -560,7 +560,87 @@ Gracias a esto, la primera vez es un comando largo, pero todas las siguientes ve
 
 ---
 
-## 12. Sincronización Bidireccional: Trayendo Cambios (`pull`)
+### 12. De la Rama al Tronco: Proponiendo Cambios con Pull Requests
+
+Ya sabes crear ramas, trabajar en ellas y fusionarlas en tu máquina (`git merge`). Este es el flujo de trabajo local. Pero cuando tu código vive en GitHub, introducimos un paso intermedio crucial y colaborativo: el **Pull Request (PR)**.
+
+Piénsalo con esta analogía:
+*   `git merge` es el acto de **casarse**. Es la acción técnica que une dos historiales.
+*   Un **Pull Request** es la **petición de mano**. Es la propuesta, la discusión, la revisión y la aprobación que ocurre *antes* de la boda.
+
+Un Pull Request es una **característica de GitHub** (no un comando de Git) que inicia una discusión formal sobre los cambios que has hecho en una rama. Es tu forma de decir: "He terminado mi trabajo en la rama `docs/actualizar-con-flujo-remoto`. Por favor, revisad mis cambios antes de integrarlos en `main`".
+
+**El Flujo de Trabajo con Pull Request:**
+
+1.  **Termina tu trabajo en la rama:** Haz tus commits como siempre.
+    ```bash
+    git add .
+    git commit -m "Docs: Añade la sección sobre Pull Requests"
+    ```
+
+2.  **Sube tu rama a GitHub:** La primera vez que subes una rama nueva, usas la bandera `-u` para establecer un seguimiento.
+    ```bash
+    git push -u origin docs/actualizar-con-flujo-remoto
+    ```
+
+3.  **Abre el Pull Request en GitHub:**
+    *   Ve a la página de tu repositorio en GitHub. Verás un aviso en amarillo sugiriéndote crear un Pull Request para la rama que acabas de subir. ¡Hazle caso!
+    *   Dale un título descriptivo y un comentario si es necesario.
+    *   Asegúrate de que la fusión sea desde tu rama (`docs/actualizar...`) hacia la rama base (`main`).
+    *   Haz clic en "Create pull request".
+
+4.  **Revisión y Fusión:**
+    *   En esta nueva pantalla, puedes ver todos los cambios, añadir comentarios y, si trabajaras en equipo, esperar la aprobación de tus compañeros.
+    *   Una vez que todo está correcto, verás un gran botón verde: **"Merge pull request"**. Al pulsarlo, GitHub ejecutará el `git merge` por ti en sus servidores.
+
+5.  **Limpieza:**
+    *   Después de la fusión, GitHub te ofrecerá un botón para **"Delete branch"**. Es una buena práctica borrar la rama remota, ya que su trabajo ha terminado.
+
+### 13. Manteniendo la Sincronía: `git pull` y la Limpieza Post-Fusión
+
+¡Felicidades! Tus cambios están en la rama `main`... **pero en GitHub**. Tu repositorio local aún no lo sabe. Tu rama `main` local está ahora desactualizada.
+
+Aquí es donde entra el comando `git pull`, el complemento de `git push`.
+
+```bash
+# 1. Vuelve a tu rama principal
+git switch main
+
+# 2. "Tira" de los cambios del remoto para actualizar tu local
+git pull origin main
+```
+
+Este comando descarga el "commit de fusión" que GitHub creó y lo integra en tu `main` local, dejándola perfectamente sincronizada con el remoto.
+
+Ahora solo queda un paso de limpieza: borrar la rama en tu máquina local.
+
+```bash
+# -d es seguro, solo funciona si la rama ya fue fusionada
+git branch -d docs/actualizar-con-flujo-remoto
+```
+
+Has completado el ciclo profesional completo: **rama -> commit -> push -> pull request -> merge -> pull -> limpieza**.
+
+---
+
+### **Siguientes Pasos (¡Ahora mismo!)**
+
+Una vez que hayas pegado este texto y guardado el archivo, estás en medio del flujo de trabajo. ¿Qué toca ahora?
+
+1.  **Verifica tus cambios** con `git status` y `git diff`. Verás las modificaciones que acabas de hacer.
+2.  **Guarda tu trabajo en un commit** en la rama `docs/actualizar-con-flujo-remoto`. Un buen mensaje sería:
+    ```bash
+    git add .
+    git commit -m "Docs: Añade secciones sobre Pull Requests y flujo remoto"
+    ```
+3.  **Sube la rama a GitHub** como se describe en el texto que acabas de pegar:
+    ```bash
+    git push -u origin docs/actualizar-con-flujo-remoto
+    ```
+
+¡Adelante! Realiza estos pasos y avísame cuando estés listo para el siguiente. Estás a punto de poner en práctica exactamente lo que acabas de documentar.
+---
+## 14. Sincronización Bidireccional: Trayendo Cambios (`pull`)
 
 `git push` envía tus cambios a GitHub. Pero, ¿qué pasa si los cambios están en GitHub y no en tu ordenador? Esto puede ocurrir por dos razones:
 *   Hiciste un cambio directamente desde la interfaz web de GitHub.
@@ -589,7 +669,7 @@ Con estos comandos, ya no solo eres alguien que guarda versiones, sino que puede
 
 ---
 
-## 13. Poniendo Todo en Práctica: Un Caso Real de Actualización
+## 15. Poniendo Todo en Práctica: Un Caso Real de Actualización
 
 La teoría está clara, pero la práctica presenta desafíos. ¿Qué ocurre cuando nos enfrentamos a una tarea cotidiana?
 
@@ -668,10 +748,11 @@ git push
 
 **Conclusión de la práctica:** Hemos sustituido el **miedo a sobreescribir** por la **confianza de tener un historial**. No creamos desorden con múltiples archivos, sino que construimos una línea de tiempo limpia y robusta sobre un único archivo. Este es el verdadero cambio de mentalidad que nos ofrece Git.
 
+---
+### 16. Git Avanzado
 
-### 14. Git Avanzado
 
-
+---
 ## Apéndice A: El Arte de Escribir un Buen Mensaje de Commit
 
 La línea de asunto de un commit es, posiblemente, la pieza de documentación más leída de todo un proyecto. Un buen historial de commits es una de las marcas de un desarrollador profesional y cuidadoso.
