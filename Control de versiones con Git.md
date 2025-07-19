@@ -560,6 +560,86 @@ Con estos comandos, ya no solo eres alguien que guarda versiones, sino que puede
 
 ---
 
+## 13. Poniendo Todo en Práctica: Un Caso Real de Actualización
+
+La teoría está clara, pero la práctica presenta desafíos. ¿Qué ocurre cuando nos enfrentamos a una tarea cotidiana?
+
+**El Escenario:** Tenemos una versión de nuestro archivo de notas. Recibimos una versión más nueva y completa.
+
+**El Impulso "Viejuno":** Nuestro primer instinto es renombrar el archivo actual a `notas_v1.md` y guardar el nuevo contenido en `notas_v2.md`. Esto nos devuelve al sistema de "Versionado por Nomenclatura", justo lo que queremos evitar.
+
+**La Pregunta Clave:** "Pero... ¿y si me gustara más la versión anterior? ¿La pierdo si la sobreescribo?" Esta pregunta es la razón de ser de Git. La respuesta es: **nunca pierdes nada que hayas guardado en un commit.**
+
+Veamos el curso de acción correcto, paso a paso, usando nuestro nuevo framework.
+
+### Paso 1: Verificar el Punto de Partida
+
+Antes de hacer nada, confirmamos que nuestro trabajo previo está a salvo.
+```bash
+git status
+```
+El mensaje "nothing to commit, working tree clean" nos da luz verde. Nuestro último commit es nuestro punto de restauración seguro.
+
+### Paso 2: Realizar el Cambio sin Miedo
+
+Procedemos a actualizar el archivo directamente.
+1.  Abrimos `Control de versiones con Git.md`.
+2.  Borramos todo el contenido antiguo.
+3.  Pegamos el nuevo contenido completo.
+4.  Guardamos el archivo.
+
+### Paso 3: Observar con las Herramientas de Git
+
+No estamos a ciegas. Le pedimos a Git que nos informe de la situación.
+```bash
+# Primero, vemos QUÉ archivo ha cambiado
+git status
+
+# Luego, vemos EXACTAMENTE QUÉ líneas han cambiado
+git diff
+```
+`status` nos dirá que el archivo fue `modified`. `diff` nos mostrará todas las líneas eliminadas (rojo) y añadidas (verde), dándonos una visión precisa de la actualización.
+
+### Paso 4: Preparar el Nuevo Contenido (`add`)
+
+Estamos conformes con la actualización. La preparamos para ser guardada en el historial.
+```bash
+git add .
+```
+Ahora el cambio está en el "Staging Area", listo para la "foto".
+
+### Paso 5: Crear un Nuevo Punto en la Historia (`commit`)
+
+Guardamos esta nueva versión como un nuevo punto seguro en nuestra línea de tiempo, con una descripción clara.
+```bash
+git commit -m "Incorpora el contenido actualizado del manual"
+```
+¡Listo! Hemos creado una nueva versión oficial del proyecto.
+
+### Paso 6: La Prueba de Fuego - ¿Dónde está mi versión antigua?
+
+Aquí calmamos nuestro miedo. La versión antigua no ha desaparecido. Está en el commit anterior.
+Primero, vemos el historial:
+```bash
+git log --oneline
+```
+Veremos nuestro nuevo commit en la cima, y el commit anterior justo debajo. Copiamos el código (hash) del commit anterior y ejecutamos:
+```bash
+git show HASH_DEL_COMMIT_ANTIGUO:"Control de versiones con Git.md"
+```
+Git nos mostrará en la terminal el contenido íntegro del archivo en esa versión pasada, demostrando que sigue ahí, intacta y accesible.
+
+### Paso 7: Sincronizar con la Nube (`push`)
+
+Contentos con nuestra nueva versión y sabiendo que la antigua está a salvo en el historial, subimos una copia de seguridad de nuestro trabajo a GitHub.
+```bash
+git push
+```
+
+**Conclusión de la práctica:** Hemos sustituido el **miedo a sobreescribir** por la **confianza de tener un historial**. No creamos desorden con múltiples archivos, sino que construimos una línea de tiempo limpia y robusta sobre un único archivo. Este es el verdadero cambio de mentalidad que nos ofrece Git.
+```
+---
+
 ## Apéndice A: El Arte de Escribir un Buen Mensaje de Commit
 
 La línea de asunto de un commit es, posiblemente, la pieza de documentación más leída de todo un proyecto. Un buen historial de commits es una de las marcas de un desarrollador profesional y cuidadoso.
