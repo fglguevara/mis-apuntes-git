@@ -514,21 +514,46 @@ Imagina que estás escribiendo tus notas y se te ocurre una idea para reestructu
     git switch nueva-funcionalidad
     ```
     *(El comando moderno es `switch`. También verás mucho el antiguo `git checkout nueva-funcionalidad`)*.
+    Para generar una nueva rama y cambiarte a ella al mismo tiempo, puedes usar:
+    ```bash
+    git switch -c nueva-funcionalidad
+    ```
+    *(El `-c` significa "crear")*.
 
 4.  **Trabajar como siempre:** Ahora estás en la rama `nueva-funcionalidad`. Puedes hacer `add` y `commit` aquí. Estos commits **solo existen en esta rama** y no afectan a `main`.
 
-5.  **Volver a la rama principal:** Cuando hayas terminado tu trabajo en la rama.
+
+5. ¿Qué pasa la primera vez que subimos una rama nueva? Cuando creamos una rama y queremos subirla por primera vea a GitHub, necesitamos decirle a Git dos cosas: a qué repositorio remoto queremos subirla (`origin`) y cómo queremos que se llame en el remoto (normalmente, con el mismo nombre).
+
+Además, podemos crear un "vínculo" o "seguimiento" entre nuestra rama local y la remota. Para hacer todo esto en un solo paso, usamos el comando:
+
+`git push --set-upstream origin <nombre-de-la-rama>`
+
+O su versión corta, que es mucho más común:
+
+`git push -u origin <nombre-de-la-rama>`
+
+**¿Qué hace el parámetro `-u` o `--set-upstream`?**
+
+Establece una conexión permanente. Le dice a Git: "A partir de ahora, cada vez que yo haga `git push` en esta rama, ya sabes que tienes que enviarlo a `origin` y a la rama con este mismo nombre".
+
+Gracias a esto, la primera vez es un comando largo, pero todas las siguientes veces que queramos subir cambios en esta misma rama, solo necesitaremos escribir:
+
+`git push`
+
+
+6.  **Volver a la rama principal:** Cuando hayas terminado tu trabajo en la rama.
     ```bash
     git switch main
     ```
 
-6.  **Fusionar los cambios:** Ahora que estás de vuelta en `main`, le dices a Git que traiga todo el trabajo que hiciste en la otra rama.
+7.  **Fusionar los cambios:** Ahora que estás de vuelta en `main`, le dices a Git que traiga todo el trabajo que hiciste en la otra rama.
     ```bash
     git merge nueva-funcionalidad
     ```
     Git inteligentemente integrará todos los commits de `nueva-funcionalidad` en `main`.
 
-7.  **(Opcional) Borrar la rama:** Una vez que el trabajo está fusionado y ya no la necesitas.
+8.  **(Opcional) Borrar la rama:** Una vez que el trabajo está fusionado y ya no la necesitas.
     ```bash
     git branch -d nueva-funcionalidad
     ```
