@@ -453,7 +453,11 @@ Similar al anterior. Haces un commit y al segundo te das cuenta de que un archiv
     git commit --amend --no-edit
     ```
     *   La opción `--no-edit` es un truco útil: realiza la enmienda sin abrir el editor de texto, ya que el mensaje del commit original ya era correcto.
-    *   `--amend` destruye el commit antiguo y crea uno nuevo que lo reemplaza. Por eso es vital usarlo solo en commits que no has subido con `git push`. Si ya lo has hecho, es mejor evitarlo para no causar conflictos.
+    *   `--amend` destruye el commit antiguo y crea uno nuevo -se abre el editor de texto- que lo reemplaza. Por eso es vital usarlo solo en commits que no has subido con `git push`. Si ya lo has hecho, es mejor evitarlo para no causar conflictos.
+*   Escenaro 2b: Quieres cambiar el mensaje del último commit.
+    ```bash
+    git commit --amend -m "Mensaje corregido del último commit"
+    ```
 
 ### Escenario 3: "Quiero deshacer completamente los cambios de mi último commit"
 
@@ -628,6 +632,7 @@ Veremos nuestro nuevo commit en la cima, y el commit anterior justo debajo. Copi
 git show HASH_DEL_COMMIT_ANTIGUO:"Control de versiones con Git.md"
 ```
 Git nos mostrará en la terminal el contenido íntegro del archivo en esa versión pasada, demostrando que sigue ahí, intacta y accesible.
+`git show HASH_DEL_COMMIT_ANTIGUO`nos permite ver la información del commit (has, autor, fecha, mensaje y dun diff detallado, línea por línea de los cambiso exactos que se introdujeron en ese commit: en verde las adiciones, en rojo, las eliminaciones).
 
 ### Paso 7: Sincronizar con la Nube (`push`)
 
@@ -637,8 +642,10 @@ git push
 ```
 
 **Conclusión de la práctica:** Hemos sustituido el **miedo a sobreescribir** por la **confianza de tener un historial**. No creamos desorden con múltiples archivos, sino que construimos una línea de tiempo limpia y robusta sobre un único archivo. Este es el verdadero cambio de mentalidad que nos ofrece Git.
-```
----
+
+
+### 14. Git Avanzado
+
 
 ## Apéndice A: El Arte de Escribir un Buen Mensaje de Commit
 
