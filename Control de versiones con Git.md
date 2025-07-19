@@ -236,9 +236,9 @@ Aquí es donde conocerás al que se convertirá en tu comando más utilizado en 
 
 ---
 
-## 8. El Panel de Control: Verificando Cambios (`git status` y `git diff`)
+## 8. El Panel de Control: Verificando Cambios (`git status`, `git diff` y `git log`)
 
-Una vez que el repositorio está conectado, necesitas una forma de saber qué ha cambiado desde tu último punto de guardado (tu último `commit`). Git te ofrece dos comandos principales para esto: uno te da una vista general y el otro, una vista detallada.
+Una vez que el repositorio está conectado, necesitas una forma de saber qué ha cambiado desde tu último punto de guardado (tu último `commit`). Git te ofrece tres comandos principales para esto: uno te da una vista general, otro una vista detallada, y el último te muestra la historia completa.
 
 ### 8.1. La Vista General: `git status`
 
@@ -293,8 +293,6 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 *   **`Changes not staged for commit`**: Git te avisa: "¡Ojo! Hay cambios que no has preparado para el próximo guardado".
 *   **`modified: tus-apuntes.md`**: Y aquí te dice exactamente **qué archivo** ha cambiado. El nombre del archivo aparecerá en rojo.
-*   
-F: Línea modificada 
 
 ### 8.2. La Vista Detallada: `git diff`
 
@@ -306,7 +304,7 @@ Con los cambios que acabas de hacer, ejecuta este comando:
 git diff
 ```
 
-La salida será algo así (puede que te la muestre con `less`, ¡ya sabes cómo salir con `q`!):
+La salida será algo así:
 
 ```diff
 diff --git a/tus-apuntes.md b/tus-apuntes.md
@@ -323,10 +321,35 @@ index 1234567..abcdefg 100644
 *   La línea que empieza con `+` (normalmente en verde) es el texto que has **añadido**.
 *   Si hubieras borrado texto, aparecería una línea empezando con `-` (normalmente en rojo).
 
+### 8.3. La Vista Histórica: `git log` y `git log --oneline`
+
+Mientras `status` y `diff` te muestran el presente, `git log` te muestra el pasado. Es tu máquina del tiempo para ver todo el historial de commits que has creado.
+
+Ejecuta el comando básico:
+```bash
+git log
+```
+Verás una lista detallada de cada commit: su identificador largo (hash), el autor, la fecha y el mensaje completo. Es útil, pero a menudo es demasiada información.
+
+Para una vista mucho más práctica, usa la opción `--oneline`:
+```bash
+git log --oneline
+```
+La salida se transforma en un resumen perfecto:
+```
+a1b2c3d (HEAD -> main) Añadida la sección sobre git status y diff
+f1e2d3c Reestructura el capítulo de 'Primeros Pasos'
+1a2b3c4 Commit inicial: Creación del proyecto y notas iniciales
+```
+*   **`a1b2c3d`**: El identificador corto y único de cada commit.
+*   **`(HEAD -> main)`**: Te indica dónde estás ahora mismo (en la punta de la rama `main`).
+*   **`Añadida la sección...`**: El mensaje de commit, tu titular del cambio.
+
 ### Resumen Práctico
 
 *   **¿Quiero saber si he cambiado algo?** -> `git status`
 *   **¿Quiero saber qué he cambiado exactamente?** -> `git diff`
+*   **¿Quiero ver el historial de cambios?** -> `git log --oneline`
 
 Ahora que has visto los cambios, el siguiente paso lógico sería guardarlos. ¿Recuerdas el ciclo?
 
@@ -334,9 +357,7 @@ Ahora que has visto los cambios, el siguiente paso lógico sería guardarlos. ¿
 2.  `git commit -m "Añadida la sección sobre git status y diff"` (para guardar la "foto")
 3.  `git push` (para subir la nueva versión a tu copia de seguridad en GitHub)
 
-Este ciclo (`modificar -> status/diff -> add -> commit -> push`) es el 90% del uso diario de Git para un usuario individual. ¡Lo estás haciendo genial
-
-
+Este ciclo (`modificar -> status/diff/log -> add -> commit -> push`) es el 90% del uso diario de Git para un usuario individual. ¡Lo estás haciendo genial!
 
 ## 9. La Tríada Mágica: `add`, `commit` y `push`
 
@@ -391,9 +412,6 @@ Ahora, veamos qué hace cada comando en esta analogía.
 
 Por eso el ciclo es siempre `add` -> `commit` -> `push`. No puedes enviar una caja que no has precintado, y no puedes precintar una caja que está vacía.
 
-
-
-
 Para aumentar ese 90% y acercarte al 95-98% del uso real, te sugiero que nos centremos en tres áreas que cubren las situaciones más comunes que encontrarás a partir de ahora:
 
 1.  **Corregir errores y viajar en el tiempo:** ¿Qué pasa si te equivocas?
@@ -421,27 +439,7 @@ Este comando abrirá tu editor de texto para que puedas reescribir el mensaje de
 ```bash
 git commit --amend -m "Este es el mensaje corregido"
 ```
-F: Hay una convención para redactar los commits llamada "Conventional Commits". 
 
-#### ¿Cómo redactar "commits messages" de forma efectiva?
-Cuando estés en la pantalla de git commit --amend, pregúntate:
-
-- ¿Qué *verbo de acción* describe mi cambio? (Añadir, Eliminar, Reestructurar, Actualizar, Reescribir, Corregir, etc.)
-- ¿Qué *cosa he cambiado* exactamente? (El botón de login, el cálculo de IVA, etc.)
-- ¿Es un cambio complejo que necesita *explicación*?
-No: Escribe solo la línea de asunto.
-Sí: Escribe el asunto, deja una línea en blanco y añade un párrafo que incluya el contexto y por qué fue necesario el trabajo. 
-
-``` Ejemplo de menaje de commit
-Reestructura el capítulo de 'Primeros Pasos' para facilitar la lectura # Titular *qué y por qué*
-    # Linea en blanco
-La versión anterior del capítulo mezclaba los conceptos de instalación, configuración y primer uso, lo que generaba tickets de soporte
-recurrentes. # Contexto
-
-Este cambio divide el contenido en tres secciones distintas y numeradas,
-siguiendo un flujo lógico para guiar al nuevo usuario desde cero hasta
-tener el programa funcionando. # ¿Por qué fue ncesario este trabajo?
-```
 ### Escenario 2: "¡Olvidé añadir un archivo al último commit!"
 
 Similar al anterior. Haces un commit y al segundo te das cuenta de que un archivo relacionado con ese cambio se quedó fuera. No necesitas hacer un nuevo commit que diga "ahora sí, el archivo que faltaba".
@@ -452,9 +450,10 @@ Similar al anterior. Haces un commit y al segundo te das cuenta de que un archiv
     ```
 2.  Ahora, usa el mismo comando de antes para "enmendar" el commit anterior, añadiendo este nuevo archivo:
     ```bash
-    git commit --amend
+    git commit --amend --no-edit
     ```
-    Git agrupará el archivo recién añadido con los del commit anterior en un único punto de guardado, como si lo hubieras hecho bien a la primera. `--amend` destruye  cun commit y crea uno nuevo, está reescribiendo la historia pero solo si no has hecho `push` aún. Si ya lo has hecho, es mejor que no lo uses porque puede causar conflictos con otros colaboradores. 
+    *   La opción `--no-edit` es un truco útil: realiza la enmienda sin abrir el editor de texto, ya que el mensaje del commit original ya era correcto.
+    *   `--amend` destruye el commit antiguo y crea uno nuevo que lo reemplaza. Por eso es vital usarlo solo en commits que no has subido con `git push`. Si ya lo has hecho, es mejor evitarlo para no causar conflictos.
 
 ### Escenario 3: "Quiero deshacer completamente los cambios de mi último commit"
 
@@ -558,3 +557,51 @@ Por lo tanto, `git pull` es el equivalente a `git push`, pero en la dirección o
 *   **Para sincronizar hacia abajo:** `git pull`
 
 Con estos comandos, ya no solo eres alguien que guarda versiones, sino que puedes gestionar un historial complejo, trabajar en múltiples ideas a la vez de forma segura y mantener tu trabajo sincronizado en múltiples lugares. Has pasado del 90% a, probablemente, el 98%. El 2% restante son casos muy específicos que ya resolverás cuando te los encuentres.
+
+---
+
+## Apéndice A: El Arte de Escribir un Buen Mensaje de Commit
+
+La línea de asunto de un commit es, posiblemente, la pieza de documentación más leída de todo un proyecto. Un buen historial de commits es una de las marcas de un desarrollador profesional y cuidadoso.
+
+Aunque existen convenciones formales como los "Conventional Commits", podemos aplicar una regla del 80/20 que nos dará la mayor parte del beneficio con el mínimo esfuerzo.
+
+### La Regla de Oro: Escribe el Asunto como si dieras una Orden
+
+Piensa que tu mensaje de commit completa la frase: **"Si se aplica, este commit va a..."**
+
+*   "...**Añadir** el capítulo sobre `git log`."
+*   "...**Corregir** el error tipográfico en la introducción."
+*   "...**Reestructurar** la sección de instalación."
+
+Esto te obliga a seguir tres sencillas directrices:
+
+1.  **Empieza siempre con un verbo de acción en imperativo:** `Añade`, `Corrige`, `Elimina`, `Modifica`, `Actualiza`, `Mejora`, `Simplifica`, `Implementa`, `Reestructura`.
+2.  **Sé específico sobre el "qué":** No escribas "Arreglos". Escribe "Corrige el enlace roto a la política de privacidad".
+3.  **Sé conciso:** Intenta que la línea no supere los 50-70 caracteres. Es el titular de una noticia, no la noticia entera.
+
+### El Cuerpo del Mensaje: Explicando el "Porqué"
+
+Si tu cambio es complejo y la línea de asunto no es suficiente, puedes añadir un cuerpo para explicar el **"porqué"** del cambio, no el "cómo" (para eso está el código o el `diff`).
+
+Cuando estés en la pantalla de `git commit` (o `git commit --amend`), sigue esta estructura:
+
+1.  Escribe tu línea de asunto (el titular) siguiendo la regla de oro.
+2.  Deja una línea completamente en blanco.
+3.  Escribe uno o dos párrafos cortos explicando el contexto y la motivación.
+
+**Ejemplo de un mensaje de commit completo:**
+```
+Reestructura el capítulo de 'Primeros Pasos' para facilitar la lectura
+
+La versión anterior del capítulo mezclaba los conceptos de instalación,
+configuración y primer uso, lo que generaba tickets de soporte
+recurrentes.
+
+Este cambio divide el contenido en tres secciones distintas y numeradas,
+siguiendo un flujo lógico para guiar al nuevo usuario desde cero hasta
+tener el programa funcionando.
+```
+*   **Titular:** Claro, imperativo, dice el *qué* y el *porqué* superficial.
+*   **Línea en blanco:** Crucial para separar asunto y cuerpo.
+*   **Cuerpo:** Explica el *contexto* (problema) y la *solución* (por qué fue necesario el trabajo).
