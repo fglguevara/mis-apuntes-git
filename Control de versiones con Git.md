@@ -514,6 +514,10 @@ Imagina que estás escribiendo tus notas y se te ocurre una idea para reestructu
     git switch nueva-funcionalidad
     ```
     *(El comando moderno es `switch`. También verás mucho el antiguo `git checkout nueva-funcionalidad`)*.
+    ```fish
+    git switch -c GitAvanzado
+    ```
+    Hace la misma función que `git branch` + `git switch`, creando y cambiando a la nueva rama en un solo paso.
 
 4.  **Trabajar como siempre:** Ahora estás en la rama `nueva-funcionalidad`. Puedes hacer `add` y `commit` aquí. Estos commits **solo existen en esta rama** y no afectan a `main`.
 
@@ -645,7 +649,40 @@ git push
 
 
 ### 14. Git Avanzado
+#### 14.1 El Bolsillo Mágico: Guardando Cambios Temporales con `git stash`
 
+**El Problema:** Estás a mitad de un cambio importante en tu rama `feature-nueva`, pero aún no estás listo para hacer un `commit`. De repente, te piden que arregles un error urgente en la rama `main`. No puedes hacer `commit` de tu trabajo a medias, pero si cambias de rama con `git switch main`, Git te dará un error porque tienes cambios sin guardar que podrían entrar en conflicto. ¿Qué haces?
+
+**La Solución:** `git stash` (que se traduce como "esconder" o "guardar").
+
+`git stash` es un bolsillo mágico donde puedes guardar temporalmente todos tus cambios locales (los que verías con `git status` o `git diff`) sin necesidad de hacer un commit. Tu directorio de trabajo vuelve a estar limpio (`working tree clean`), permitiéndote cambiar de rama libremente.
+
+**El Flujo de Trabajo:**
+
+1.  **Guardar los cambios en el bolsillo:**
+    ```bash
+    git stash
+    ```
+    *Tu trabajo a medias desaparece y tu directorio queda limpio.*
+
+2.  **Cambiar de rama y hacer el trabajo urgente:**
+    ```bash
+    git switch main
+    # ...haces el arreglo, commit, push...
+    ```
+
+3.  **Volver a tu rama original:**
+    ```bash
+    git switch feature-nueva
+    ```
+
+4.  **Sacar los cambios del bolsillo y aplicarlos de nuevo:**
+    ```bash
+    git stash pop
+    ```
+    *Tu trabajo a medias reaparece exactamente como lo dejaste, listo para que sigas trabajando.*
+
+`git stash` es una herramienta fundamental para gestionar el contexto y mantener la flexibilidad cuando trabajas con múltiples ramas.
 
 ## Apéndice A: El Arte de Escribir un Buen Mensaje de Commit
 
