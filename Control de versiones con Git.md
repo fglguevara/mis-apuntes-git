@@ -392,130 +392,169 @@ Ahora, veamos qué hace cada comando en esta analogía.
 Por eso el ciclo es siempre `add` -> `commit` -> `push`. No puedes enviar una caja que no has precintado, y no puedes precintar una caja que está vacía.
 
 
-***
 
-# Guía Rápida de Git y GitHub
 
-Este documento es una referencia ágil para el uso diario de Git y la sincronización con un repositorio en GitHub.
+Para aumentar ese 90% y acercarte al 95-98% del uso real, te sugiero que nos centremos en tres áreas que cubren las situaciones más comunes que encontrarás a partir de ahora:
 
----
+1.  **Corregir errores y viajar en el tiempo:** ¿Qué pasa si te equivocas?
+2.  **Experimentar sin miedo (el verdadero superpoder de Git):** El uso de ramas.
+3.  **Sincronizar el trabajo de otros (o el tuyo desde otro ordenador):** El complemento de `push`.
 
-## 1. Conceptos Fundamentales: ¿Por Qué Usar Git?
-
-Git reemplaza el método manual de guardar versiones (`doc_v1`, `doc_v2`) por un sistema profesional que resuelve sus principales problemas:
-
-| Característica | Sistema Manual | Flujo con Git y GitHub |
-| :--- | :--- | :--- |
-| **Estructura** | Múltiples copias del mismo archivo/carpeta. | **Un único archivo/carpeta**. El historial es invisible y se gestiona en la subcarpeta `.git`. |
-| **Guardado** | Renombrar archivo + anotar cambios en un `.txt` aparte. | `git commit -m "Descripción del cambio"`. El mensaje está ligado inseparablemente al cambio exacto. |
-| **Ver Cambios** | Comparar dos archivos visualmente, a ojo. | `git diff` muestra con precisión quirúrgica las líneas añadidas y eliminadas. |
-| **Seguridad** | Depende de tu disco duro y copias manuales. | Tu disco duro **Y** una copia completa de todo el historial en GitHub. |
-| **Experimentar** | Arriesgado. Genera desorden con archivos de prueba. | Se usan "ramas" (`branch`), líneas de tiempo paralelas que se pueden fusionar o descartar limpiamente. |
+Añadamos estas secciones a tus notas.
 
 ---
 
-## 2. Configuración Inicial (Solo se hace una vez)
+## 10. Viajar en el Tiempo: Cómo Corregir Errores Comunes
 
-Pasos para configurar un proyecto desde cero.
+Tarde o temprano, cometerás un error. Guardarás algo que no debías, escribirás un mensaje incorrecto o simplemente querrás deshacer un cambio. Git es tu red de seguridad.
 
-### En GitHub:
+### Escenario 1: "Me equivoqué en el mensaje de mi ÚLTIMO commit"
 
-1.  **Crear Repositorio:** Haz clic en `+` > **New Repository**.
-2.  **Configurar:**
-    *   **Nombre:** Corto y descriptivo (ej: `mis-apuntes-git`).
-    *   **Privacidad:** Selecciona **Privado**.
-    *   **IMPORTANTE:** NO marcar las casillas de `README`, `.gitignore` o `license`. Debe ser un repositorio vacío.
-3.  **Copiar URL:** Guarda la URL del repositorio (la que termina en `.git`).
+Acabas de hacer un `commit` y te das cuenta de que el mensaje tiene una errata o no es claro. **Si aún no lo has subido con `git push`**, la solución es elegantísima.
 
-### En tu Ordenador:
+```bash
+git commit --amend
+```
 
-1.  **Configurar tu identidad de Git** (una vez por ordenador):
+Este comando abrirá tu editor de texto para que puedas reescribir el mensaje del último commit. Si solo quieres cambiar el mensaje en una línea sin abrir el editor, puedes hacer:
+
+```bash
+git commit --amend -m "Este es el mensaje corregido"
+```
+F: Hay una convención para redactar los commits llamada "Conventional Commits". 
+
+#### ¿Cómo redactar "commits messages" de forma efectiva?
+Cuando estés en la pantalla de git commit --amend, pregúntate:
+
+- ¿Qué *verbo de acción* describe mi cambio? (Añadir, Eliminar, Reestructurar, Actualizar, Reescribir, Corregir, etc.)
+- ¿Qué *cosa he cambiado* exactamente? (El botón de login, el cálculo de IVA, etc.)
+- ¿Es un cambio complejo que necesita *explicación*?
+No: Escribe solo la línea de asunto.
+Sí: Escribe el asunto, deja una línea en blanco y añade un párrafo que incluya el contexto y por qué fue necesario el trabajo. 
+
+``` Ejemplo de menaje de commit
+Reestructura el capítulo de 'Primeros Pasos' para facilitar la lectura # Titular *qué y por qué*
+    # Linea en blanco
+La versión anterior del capítulo mezclaba los conceptos de instalación, configuración y primer uso, lo que generaba tickets de soporte
+recurrentes. # Contexto
+
+Este cambio divide el contenido en tres secciones distintas y numeradas,
+siguiendo un flujo lógico para guiar al nuevo usuario desde cero hasta
+tener el programa funcionando. # ¿Por qué fue ncesario este trabajo?
+```
+### Escenario 2: "¡Olvidé añadir un archivo al último commit!"
+
+Similar al anterior. Haces un commit y al segundo te das cuenta de que un archivo relacionado con ese cambio se quedó fuera. No necesitas hacer un nuevo commit que diga "ahora sí, el archivo que faltaba".
+
+1.  Añade el archivo olvidado al Staging Area:
     ```bash
-    git config --global user.name "Tu Nombre"
-    git config --global user.email "tu_email@ejemplo.com"
+    git add el-archivo-olvidado.md
     ```
-2.  **Iniciar el repositorio** en la carpeta de tu proyecto:
+2.  Ahora, usa el mismo comando de antes para "enmendar" el commit anterior, añadiendo este nuevo archivo:
     ```bash
-    git init
+    git commit --amend
     ```
-3.  **Crear un archivo `.gitignore`** para excluir ficheros innecesarios. Contenido de ejemplo:
-    ```
-    # Archivos de sistema operativo
-    .DS_Store
-    Thumbs.db
-    # Archivos temporales
-    *.tmp
-    *.swp
-    ```4.  **Conectar tu repositorio local con GitHub:**
+    Git agrupará el archivo recién añadido con los del commit anterior en un único punto de guardado, como si lo hubieras hecho bien a la primera. `--amend` destruye  cun commit y crea uno nuevo, está reescribiendo la historia pero solo si no has hecho `push` aún. Si ya lo has hecho, es mejor que no lo uses porque puede causar conflictos con otros colaboradores. 
+
+### Escenario 3: "Quiero deshacer completamente los cambios de mi último commit"
+
+Hiciste un commit, pero los cambios que contiene son un desastre y quieres volver exactamente al estado del commit anterior, pero sin perder el trabajo que hiciste (por si quieres reusarlo).
+
+```bash
+git reset --soft HEAD~1
+```
+
+Desglosemos este comando:
+*   `git reset`: Es el comando para "resetear" tu estado a un punto anterior.
+*   `HEAD~1`: `HEAD` es un puntero a tu commit actual. `~1` significa "un commit antes de `HEAD`".
+*   `--soft`: Esta es la clave. Le dice a Git: "deshaz el commit, pero deja todos los cambios que contenía en el Staging Area (la 'caja de envío')". De esta forma, no pierdes el código, solo el punto de guardado.
+
+### Escenario 4: "Quiero descartar TODOS mis cambios locales que NO he guardado"
+
+Has modificado varios archivos, pero no has hecho `git add` ni `git commit`. Te das cuenta de que todo lo que has hecho es basura y quieres volver a la versión limpia de tu último commit. Este es tu "botón de pánico".
+
+```bash
+git restore .
+```
+
+Este comando restaura todos los archivos de tu directorio de trabajo a la versión exacta en la que estaban en el último commit. **¡Cuidado! A diferencia de `reset --soft`, estos cambios se pierden para siempre.**
+
+---
+
+## 11. El Superpoder de Git: Ramas para Experimentar (`branch` y `merge`)
+
+Hasta ahora, has trabajado en una única línea de tiempo, llamada `main`. Las **ramas** (`branches`) son líneas de tiempo paralelas que nacen de un punto de tu historia. Son, sin duda, la característica más potente de Git.
+
+**¿Por qué son útiles incluso si trabajas solo?**
+Imagina que estás escribiendo tus notas y se te ocurre una idea para reestructurar todo el documento. Es un cambio grande y no sabes si funcionará.
+
+*   **Sin ramas:** Harías una copia de seguridad manual, trabajarías en el archivo original y, si no te gusta, tendrías que restaurar la copia. Un lío.
+*   **Con ramas:** Creas una rama llamada `experimento-estructura`. El universo `main` se queda congelado y seguro, y tú saltas al universo `experimento-estructura` para hacer todos los cambios que quieras.
+    *   **¿La idea funciona?** Fusionas (`merge`) la rama de experimento con `main`, y la línea de tiempo principal ahora incluye tu gran idea.
+    *   **¿La idea es un desastre?** Simplemente borras la rama de experimento y vuelves a `main` como si nada hubiera pasado.
+
+### El Flujo de Trabajo con Ramas
+
+1.  **Ver tus ramas actuales:**
     ```bash
-    # Reemplaza la URL con la tuya
-    git remote add origin https://github.com/tu-usuario/tu-repo.git
+    git branch
     ```
-5.  **Establecer `main` como la rama principal:**
+    *(Verás solo `* main`, indicando que estás en la rama `main`)*.
+
+2.  **Crear una nueva rama:**
     ```bash
-    git branch -M main
+    git branch nueva-funcionalidad
+    ```
+
+3.  **Moverte a tu nueva rama:**
+    ```bash
+    git switch nueva-funcionalidad
+    ```
+    *(El comando moderno es `switch`. También verás mucho el antiguo `git checkout nueva-funcionalidad`)*.
+
+4.  **Trabajar como siempre:** Ahora estás en la rama `nueva-funcionalidad`. Puedes hacer `add` y `commit` aquí. Estos commits **solo existen en esta rama** y no afectan a `main`.
+
+5.  **Volver a la rama principal:** Cuando hayas terminado tu trabajo en la rama.
+    ```bash
+    git switch main
+    ```
+
+6.  **Fusionar los cambios:** Ahora que estás de vuelta en `main`, le dices a Git que traiga todo el trabajo que hiciste en la otra rama.
+    ```bash
+    git merge nueva-funcionalidad
+    ```
+    Git inteligentemente integrará todos los commits de `nueva-funcionalidad` en `main`.
+
+7.  **(Opcional) Borrar la rama:** Una vez que el trabajo está fusionado y ya no la necesitas.
+    ```bash
+    git branch -d nueva-funcionalidad
     ```
 
 ---
 
-## 3. El Flujo de Trabajo Diario
+## 12. Sincronización Bidireccional: Trayendo Cambios (`pull`)
 
-Este es el ciclo que repetirás constantemente para guardar y sincronizar tus cambios.
+`git push` envía tus cambios a GitHub. Pero, ¿qué pasa si los cambios están en GitHub y no en tu ordenador? Esto puede ocurrir por dos razones:
+*   Hiciste un cambio directamente desde la interfaz web de GitHub.
+*   Estás trabajando en otro ordenador (ej. el del trabajo), subiste cambios desde allí, y ahora estás en casa.
 
-### Paso 0: Revisar el Estado del Proyecto
+El comando para traer los cambios remotos a tu repositorio local es `git pull`.
 
-Antes de hacer nada, comprueba la situación actual.
+```bash
+git pull
+```
 
-*   **`git status`**: Te da una vista general. ¿Hay archivos modificados, nuevos o preparados para guardar?
-*   **`git diff`**: Te muestra el detalle exacto de los cambios, línea por línea.
+**¿Qué hace `git pull` exactamente?**
+Es la combinación de dos comandos:
+1.  `git fetch`: Descarga toda la información del repositorio remoto (nuevos commits, nuevas ramas) pero **no la integra** en tu trabajo local. Solo "baja el catálogo".
+2.  `git merge`: Fusiona los cambios que se acaban de descargar en tu rama local actual.
 
-### Paso 1: Preparar los Cambios (`git add`)
+Por lo tanto, `git pull` es el equivalente a `git push`, pero en la dirección opuesta. Es el comando que usarás cada mañana al empezar a trabajar para asegurarte de que tienes la última versión del proyecto.
 
-Seleccionas qué cambios quieres incluir en tu próximo punto de guardado. Esto se conoce como "añadir al Staging Area".
+### Resumen de las Nuevas Habilidades
 
-*   Para preparar **todos** los archivos modificados:
-    ```bash
-    git add .
-    ```
-*   Para preparar un archivo **específico**:
-    ```bash
-    git add nombre-del-archivo.md
-    ```
+*   **Para corregir:** `git commit --amend`, `git reset`
+*   **Para experimentar:** `git branch`, `git switch`, `git merge`
+*   **Para sincronizar hacia abajo:** `git pull`
 
-### Paso 2: Guardar los Cambios Localmente (`git commit`)
-
-Creas un punto de guardado permanente en el historial de tu ordenador.
-
-*   Guarda los cambios preparados con un mensaje descriptivo y obligatorio:
-    ```bash
-    git commit -m "Se añade la sección de conceptos fundamentales a las notas"
-    ```
-    *(Consejo: Escribe mensajes claros y en presente, como si dieras una orden: "Añade", "Corrige", "Mejora")*.
-
-### Paso 3: Sincronizar con GitHub (`git push`)
-
-Envías tus "commits" (puntos de guardado) locales al repositorio remoto en la nube.
-
-*   La **primera vez** que subes los cambios:
-    ```bash
-    git push -u origin main
-    ```
-*   Para **todas las veces siguientes**:
-    ```bash
-    git push
-    ```
-
----
-
-## 4. La Tríada Mágica: `add`, `commit`, `push`
-
-La diferencia clave para entender Git, resumida en una tabla.
-
-| Comando | Analogía | Propósito Técnico | ¿Dónde Ocurre? |
-| :--- | :--- | :--- | :--- |
-| **`git add`** | Meter archivos en una caja de envío. | Añade cambios al **Staging Area**. | En tu ordenador. |
-| **`git commit`** | Precintar y etiquetar la caja. | Guarda una "instantánea" en el **historial local**. | En tu ordenador. |
-| **`git push`** | Enviar la caja al almacén central. | Sube los commits al **repositorio remoto (GitHub)**. | Entre tu PC y GitHub. |
-
-**El Flujo Visual:**
-`Directorio de Trabajo` --> **`git add`** --> `Staging Area` --> **`git commit`** --> `Repositorio Local` --> **`git push`** --> `GitHub`
+Con estos comandos, ya no solo eres alguien que guarda versiones, sino que puedes gestionar un historial complejo, trabajar en múltiples ideas a la vez de forma segura y mantener tu trabajo sincronizado en múltiples lugares. Has pasado del 90% a, probablemente, el 98%. El 2% restante son casos muy específicos que ya resolverás cuando te los encuentres.
