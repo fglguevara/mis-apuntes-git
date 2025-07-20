@@ -194,7 +194,9 @@ Ya tienes el historial en tu ordenador. Ahora vamos a conectarlo con esa "caja f
     ```bash
     git push -u origin main
     ```
-    *   *Explicación*: `push` significa "empujar" o "subir". Le estás diciendo a Git: "sube el contenido de mi línea de tiempo local `main` al destino `origin`". La bandera `-u` es especial para la primera vez, y crea un enlace para que en el futuro solo necesites escribir `git push`.
+    *   *Explicación*: 
+  Al realizar un commit, tu repositorio en la carpeta .git está actualizado y se disponde de un punto de restauración seguro en tu máquina. Pero si el disco duro fallara se perdería el trabajo. Para sincronizar la historia local con el directorio en remotoen Github, asegurando una **copia de seguridad completa** se utiliza el comando `push` que significa "empujar" o "subir". Le estás diciendo a Git: "sube el contenido de mi línea de tiempo local `main` al destino `origin`". Continuando con la analogía, es el "camión de reparto" que lleva tus cajas selladas ('commits') desde tu almacén local a la fortaleza segura de GitHub.
+  La bandera `-u` es especial para la primera vez, y crea un enlace para que en el futuro solo necesites escribir `git push`.
 
 **¡Aquí es donde usarás tu Token!**
 
@@ -376,15 +378,15 @@ Ahora, veamos qué hace cada comando en esta analogía.
 
 *   **Qué haces:** Coges un documento modificado de tu mesa de trabajo y lo metes **dentro de la caja de envío**.
 *   **Comando:** `git add mi-archivo.md` (mete ese archivo específico) o `git add .` (mete todos los archivos que hayas modificado en la mesa).
-*   **Propósito:** Este es un paso intermedio y es **extremadamente útil**. Te permite ser selectivo. Imagina que has modificado 5 archivos en tu mesa, pero solo 3 de ellos pertenecen a la misma "idea" o "tarea". Con `git add`, puedes meter solo esos 3 archivos en la caja, dejando los otros 2 en la mesa para un envío posterior. Permite crear "puntos de guardado" limpios y lógicos.
+*   **Propósito:** Este es un paso intermedio y es **útil**. Te permite ser selectivo. Imagina que has modificado 5 archivos en tu mesa, pero solo 3 de ellos pertenecen a la misma "idea" o "tarea". Con `git add`, puedes meter solo esos 3 archivos en la caja, dejando los otros 2 en la mesa para un envío posterior. Es como decir: "De todo lo que he modificado, esto es lo que quiero incluir en mi próximo paquete". Es el acto de meter las cosas en la "caja de envío" antes de precintarla Permite crear "puntos de guardado" limpios y lógicos.
 
-**En resumen: `git add` no guarda nada de forma permanente. Solo prepara los cambios para el siguiente guardado.**
+En **resumen**: `git add` no guarda nada de forma permanente. Solo prepara los cambios para el siguiente guardado.
 
 ### 2. `git commit` - "Precintar y etiquetar la caja"
 
 *   **Qué haces:** Coges la caja de envío (que ya tiene dentro los archivos que seleccionaste con `git add`), la cierras con cinta adhesiva y le escribes una etiqueta clara en el exterior que describe su contenido. Por ejemplo: "Contiene el borrador del capítulo 5 y la corrección de la introducción".
 *   **Comando:** `git commit -m "Este es el mensaje de mi etiqueta"`
-*   **Propósito:** Este es el **verdadero acto de guardar**. Creas un punto de control permanente y seguro en tu historial. La caja (el "commit") se mueve desde la zona de preparación a tu **almacén local** (tu garaje). El cambio ya está registrado para siempre en tu ordenador. **Importante: en este punto, GitHub todavía no sabe nada de esta nueva caja.**
+*   **Propósito:** Este es el **verdadero acto de guardar**. Creas un punto de control permanente y seguro en tu historial. La caja (el "commit") se mueve desde la zona de preparación a tu **almacén local** (tu garaje). El cambio ya está registrado para siempre en tu ordenador. **Importante:** en este punto, GitHub todavía no sabe nada de esta nueva caja.
 
 **En resumen: `git commit` crea un punto de guardado permanente en el historial de TU ordenador.**
 
@@ -486,7 +488,14 @@ Este comando restaura todos los archivos de tu directorio de trabajo a la versi�
 
 ## 11. El Superpoder de Git: Ramas para Experimentar (`branch` y `merge`)
 
-Hasta ahora, has trabajado en una única línea de tiempo, llamada `main`. Las **ramas** (`branches`) son líneas de tiempo paralelas que nacen de un punto de tu historia. Son, sin duda, la característica más potente de Git.
+Hasta ahora, has trabajado en una única línea de tiempo, llamada `main`. La rama `main`es la versión "oficial" y funcional de tu proyecto. Es la que enseñarías a un cliente o la que desplegarías en un servidor. No quieres hacer experimentos ni añadir funcionalidades a medio terminar directamente ahí, porque podrías romperlo todo. 
+
+Aquí es donde entran las **ramas (branches)**
+```
+**Analogía Clave**: Una rama es una copia de tu proyecto en un punto concreto en el tiempo. Es un universo paralelo donde puedes trabajar en una nueva funcionalidad o corregir un error de forma segura, sin afectar a la línea de tiempo principal (main). Si el trabajo sale bien, fusionas ese universo paralelo de vuelta al principal. Si sale mal, simplemente lo abandonas sin que haya afectado en nada al original.
+
+```
+Las **ramas** (`branches`) son líneas de tiempo paralelas que nacen de un punto de tu historia. Son, sin duda, la característica más potente de Git.
 
 **¿Por qué son útiles incluso si trabajas solo?**
 Imagina que estás escribiendo tus notas y se te ocurre una idea para reestructurar todo el documento. Es un cambio grande y no sabes si funcionará.
@@ -521,6 +530,7 @@ Imagina que estás escribiendo tus notas y se te ocurre una idea para reestructu
     *(El `-c` significa "crear")*.
 
 4.  **Trabajar como siempre:** Ahora estás en la rama `nueva-funcionalidad`. Puedes hacer `add` y `commit` aquí. Estos commits **solo existen en esta rama** y no afectan a `main`.
+
 
 
 5. ¿Qué pasa la primera vez que subimos una rama nueva? Cuando creamos una rama y queremos subirla por primera vea a GitHub, necesitamos decirle a Git dos cosas: a qué repositorio remoto queremos subirla (`origin`) y cómo queremos que se llame en el remoto (normalmente, con el mismo nombre).
@@ -638,7 +648,7 @@ Una vez que hayas pegado este texto y guardado el archivo, estás en medio del f
     git push -u origin docs/actualizar-con-flujo-remoto
     ```
 
-¡Adelante! Realiza estos pasos y avísame cuando estés listo para el siguiente. Estás a punto de poner en práctica exactamente lo que acabas de documentar.
+
 ---
 ## 14. Sincronización Bidireccional: Trayendo Cambios (`pull`)
 
@@ -751,6 +761,79 @@ git push
 ---
 ### 16. Git Avanzado
 
+Una vez dominados los fundamentos del ciclo `add -> commit -> push` y el trabajo con ramas, es hora de abrir la caja de herramientas avanzadas. Los comandos de esta sección te otorgan un poder inmenso para manipular y limpiar el historial de tu proyecto. Son como bisturís de cirujano: increíblemente precisos en manos expertas, pero peligrosos si no se comprende bien su función.
+
+En esta sección exploraremos tres de las herramientas más potentes:
+
+*   **`git rebase`**: Para reescribir la historia y crear un registro de cambios lineal y limpio.
+*   **`git cherry-pick`**: Para seleccionar y aplicar un commit específico de una rama a otra.
+*   **`git reflog`**: Tu red de seguridad definitiva, un registro de todos tus movimientos que puede salvarte incluso de los errores más graves.
+
+---
+#### 16.1 Git Rebase: El Arte (poder y peligro) de Reescribir la Historia
+
+El comando `git rebase` es la alternativa a `git merge` para integrar cambios de una rama en otra. Mientras `merge` une dos historiales creando un nuevo "commit de fusión" que los ata, `rebase` lo hace de una forma radicalmente diferente 're-escribiendo la historia'.
+
+**La Analogía:**
+Imagina que los commits de tu rama son piezas de Lego que has ido apilando.
+*   **`git merge`** coge tu torre de Lego y la torre principal, y construye una nueva pieza grande encima que une las dos. El resultado es funcional, pero tienes una historia con dos caminos que convergen.
+*   **`git rebase`** coge tu torre de Lego, la desmonta pieza por pieza, se mueve a la cima de la torre principal y vuelve a montar tus piezas, una por una, en el nuevo sitio. El resultado es una única torre alta y recta, como si hubieras construido tus piezas directamente sobre las últimas de la torre principal.
+
+**La Diferencia Visual:**
+
+Un `merge` produce un historial así (con una "burbuja" de fusión):
+
+```
+      A---B---C feature/mi-idea
+     /         \
+D---E---F-------G main  (G es el commit de fusión)
+```
+
+Un `rebase` produce un historial lineal y limpio:
+
+```
+D---E---F---A'--B'--C' main (A', B', C' son tus commits, reconstruidos)
+```
+
+Su función principal es tomar una serie de commits de una rama y "re-aplicarlos" encima de otra. Esto resulta en un historial de commits lineal y mucho más limpio, como si todo el trabajo se hubiera hecho en secuencia directa sobre la rama principal.
+
+**Ventajas de `git rebase`:**
+
+1.  **Historial Lineal:** El resultado es una historia de proyecto fácil de leer, sin los commits de fusión que pueden añadir ruido.
+2.  **Facilita la Búsqueda de Errores:** Un historial lineal es perfecto para usar herramientas como `git bisect` para encontrar cuándo se introdujo un bug.
+3.  **Commits Limpios:** Es una oportunidad para limpiar y ordenar tus commits antes de proponer su integración a la rama principal.
+
+### La Regla de Oro: No Cambies el Pasado de los Demás
+
+El comando `git rebase` es una herramienta para cirujanos del historial, y como tal, viene con una advertencia crítica que nunca debe ser ignorada.
+
+> **La Regla de Oro:** Usa `rebase` solo en ramas que viven exclusivamente en tu máquina. Nunca lo uses en ramas públicas o compartidas (`main`, `develop`, etc.).
+
+¿Por qué esta regla es tan estricta? Porque `rebase` no reordena el pasado, lo **re-escribe**. Destruye los commits originales y los reemplaza por copias nuevas.
+
+Piénsalo así: es como si un historiador decidiera que la Batalla de Waterloo ocurrió en 1816 en lugar de 1815. Él publica sus nuevos libros, pero todos los demás historiadores del mundo, que trabajan con la fecha original, de repente tienen una versión de la historia incompatible. Intentar poner en común sus trabajos sería una pesadilla. Eso es exactamente lo que `git rebase` le hace a un equipo si se usa en una rama compartida.
+
+La conclusión es simple: si la rama solo la has usado tú, en tu ordenador, haz `rebase` para limpiarla. Si ya la has "publicado" con `git push` y otros pueden estar usándola, usa `git merge` para integrarla.
+
+**Caso de Uso Práctico:**
+
+Estás trabajando en tu rama `feature/mi-idea`. Mientras tanto, la rama `main` ha recibido nuevos commits. Quieres actualizar tu rama con lo último de `main` antes de proponer un Pull Request.
+
+```bash
+# 1. Asegúrate de que tu rama main está actualizada
+git switch main
+git pull
+
+# 2. Vuelve a tu rama de trabajo
+git switch feature/mi-idea
+
+# 3. Ejecuta el rebase. Le dices a Git: "Coge mis commits y ponlos encima de lo último que hay en main"
+git rebase main
+```
+
+#### 16.2 Git Cherry-Pick: Seleccionando Cambios Específicos
+
+#### 16.3 Git reflog: Tu Red de Seguridad
 
 ---
 ## Apéndice A: El Arte de Escribir un Buen Mensaje de Commit
@@ -785,6 +868,8 @@ Cuando estés en la pantalla de `git commit` (o `git commit --amend`), sigue est
 
 **Ejemplo de un mensaje de commit completo:**
 ```
+El mensaje no es solo una nota sino más bien una entrada de diario estructurada. Obliga a pensar en el cambio de forma concisa y a documentar no solo lo que se hizo, sino la intención detrás de ello. Se facilita que un futuro lector pueda entender la naturaleza del cambio. 
+El mensaje está ligado al `hash` del commit. Mediante el hash del `commit` se puede entender con precisión los cambios realizados (el `diff`) y su contexto.
 Reestructura el capítulo de 'Primeros Pasos' para facilitar la lectura
 
 La versión anterior del capítulo mezclaba los conceptos de instalación,
