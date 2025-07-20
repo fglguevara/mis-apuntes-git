@@ -126,7 +126,7 @@ Ahora le diremos a Git que empiece a "observar" esta carpeta.
 
 Escribe el siguiente comando en tu terminal y presiona Enter:
 
-```bash
+```fish
 git init
 ```
 
@@ -162,7 +162,7 @@ Este es el flujo de trabajo que repetirás cada vez que quieras guardar un punto
 
 En tu terminal, ejecuta estos dos comandos, uno después del otro:
 
-```bash
+```fish
 # 1. Añade TODOS los archivos nuevos o modificados de la carpeta (excepto los ignorados)
 git add .
 
@@ -180,18 +180,18 @@ Ya tienes el historial en tu ordenador. Ahora vamos a conectarlo con esa "caja f
     *   Coge la URL de tu repositorio que copiaste de GitHub (la que termina en `.git`).
     *   Ejecuta este comando, **reemplazando `URL_DE_TU_REPOSITORIO`** con tu URL:
 
-    ```bash
+    ```fish
     git remote add origin URL_DE_TU_REPOSITORIO
     ```
     *   *Explicación*: `remote add` añade un control remoto. `origin` es el nombre corto que, por convención, le damos a nuestra URL principal.
 
 2.  **Renombra tu línea de tiempo principal a `main`:** Es una buena práctica moderna.
-    ```bash
+    ```fish
     git branch -M main
     ```
 
 3.  **Sube tu historial a GitHub (`git push`):**
-    ```bash
+    ```fish
     git push -u origin main
     ```
     *   *Explicación*: 
@@ -219,7 +219,7 @@ A partir de este momento, tu rutina para guardar cambios y tener una copia de se
 1.  Modificas tus archivos como siempre.
 2.  Cuando llegues a un punto de control lógico, abres la terminal en la carpeta y ejecutas:
 
-    ```bash
+    ```fish
     # 1. Preparas los cambios
     git add .
 
@@ -248,7 +248,7 @@ Piensa en `git status` como preguntarle a tu asistente: **"¿Cuál es la situaci
 
 **Vamos a probarlo ahora mismo.** Ve a tu terminal, asegúrate de estar en la carpeta de tu proyecto, y ejecuta:
 
-```bash
+```fish
 git status
 ```
 
@@ -275,7 +275,7 @@ nothing to commit, working tree clean
 
 Tu directorio de trabajo ahora es **diferente** a tu último commit. Volvamos a preguntarle a Git por la situación. Ejecuta de nuevo:
 
-```bash
+```fish
 git status
 ```
 
@@ -302,7 +302,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 Con los cambios que acabas de hacer, ejecuta este comando:
 
-```bash
+```fish
 git diff
 ```
 
@@ -328,13 +328,13 @@ index 1234567..abcdefg 100644
 Mientras `status` y `diff` te muestran el presente, `git log` te muestra el pasado. Es tu máquina del tiempo para ver todo el historial de commits que has creado.
 
 Ejecuta el comando básico:
-```bash
+```fish
 git log
 ```
 Verás una lista detallada de cada commit: su identificador largo (hash), el autor, la fecha y el mensaje completo. Es útil, pero a menudo es demasiada información.
 
 Para una vista mucho más práctica, usa la opción `--oneline`:
-```bash
+```fish
 git log --oneline
 ```
 La salida se transforma en un resumen perfecto:
@@ -432,13 +432,13 @@ Tarde o temprano, cometerás un error. Guardarás algo que no debías, escribir�
 
 Acabas de hacer un `commit` y te das cuenta de que el mensaje tiene una errata o no es claro. **Si aún no lo has subido con `git push`**, la solución es elegantísima.
 
-```bash
+```fish
 git commit --amend
 ```
 
 Este comando abrirá tu editor de texto para que puedas reescribir el mensaje del último commit. Si solo quieres cambiar el mensaje en una línea sin abrir el editor, puedes hacer:
 
-```bash
+```fish
 git commit --amend -m "Este es el mensaje corregido"
 ```
 
@@ -447,17 +447,17 @@ git commit --amend -m "Este es el mensaje corregido"
 Similar al anterior. Haces un commit y al segundo te das cuenta de que un archivo relacionado con ese cambio se quedó fuera. No necesitas hacer un nuevo commit que diga "ahora sí, el archivo que faltaba".
 
 1.  Añade el archivo olvidado al Staging Area:
-    ```bash
+    ```fish
     git add el-archivo-olvidado.md
     ```
 2.  Ahora, usa el mismo comando de antes para "enmendar" el commit anterior, añadiendo este nuevo archivo:
-    ```bash
+    ```fish
     git commit --amend --no-edit
     ```
     *   La opción `--no-edit` es un truco útil: realiza la enmienda sin abrir el editor de texto, ya que el mensaje del commit original ya era correcto.
     *   `--amend` destruye el commit antiguo y crea uno nuevo -se abre el editor de texto- que lo reemplaza. Por eso es vital usarlo solo en commits que no has subido con `git push`. Si ya lo has hecho, es mejor evitarlo para no causar conflictos.
 *   Escenaro 2b: Quieres cambiar el mensaje del último commit.
-    ```bash
+    ```fish
     git commit --amend -m "Mensaje corregido del último commit"
     ```
 
@@ -465,7 +465,7 @@ Similar al anterior. Haces un commit y al segundo te das cuenta de que un archiv
 
 Hiciste un commit, pero los cambios que contiene son un desastre y quieres volver exactamente al estado del commit anterior, pero sin perder el trabajo que hiciste (por si quieres reusarlo).
 
-```bash
+```fish
 git reset --soft HEAD~1
 ```
 
@@ -478,7 +478,7 @@ Desglosemos este comando:
 
 Has modificado varios archivos, pero no has hecho `git add` ni `git commit`. Te das cuenta de que todo lo que has hecho es basura y quieres volver a la versión limpia de tu último commit. Este es tu "botón de pánico".
 
-```bash
+```fish
 git restore .
 ```
 
@@ -508,23 +508,23 @@ Imagina que estás escribiendo tus notas y se te ocurre una idea para reestructu
 ### El Flujo de Trabajo con Ramas
 
 1.  **Ver tus ramas actuales:**
-    ```bash
+    ```fish
     git branch
     ```
     *(Verás solo `* main`, indicando que estás en la rama `main`)*.
 
 2.  **Crear una nueva rama:**
-    ```bash
+    ```fish
     git branch nueva-funcionalidad
     ```
 
 3.  **Moverte a tu nueva rama:**
-    ```bash
+    ```fish
     git switch nueva-funcionalidad
     ```
     *(El comando moderno es `switch`. También verás mucho el antiguo `git checkout nueva-funcionalidad`)*.
     Para generar una nueva rama y cambiarte a ella al mismo tiempo, puedes usar:
-    ```bash
+    ```fish
     git switch -c nueva-funcionalidad
     ```
     *(El `-c` significa "crear")*.
@@ -553,18 +553,18 @@ Gracias a esto, la primera vez es un comando largo, pero todas las siguientes ve
 
 
 6.  **Volver a la rama principal:** Cuando hayas terminado tu trabajo en la rama.
-    ```bash
+    ```fish
     git switch main
     ```
 
 7.  **Fusionar los cambios:** Ahora que estás de vuelta en `main`, le dices a Git que traiga todo el trabajo que hiciste en la otra rama.
-    ```bash
+    ```fish
     git merge nueva-funcionalidad
     ```
     Git inteligentemente integrará todos los commits de `nueva-funcionalidad` en `main`.
 
 8.  **(Opcional) Borrar la rama:** Una vez que el trabajo está fusionado y ya no la necesitas.
-    ```bash
+    ```fish
     git branch -d nueva-funcionalidad
     ```
 
@@ -583,13 +583,13 @@ Un Pull Request es una **característica de GitHub** (no un comando de Git) que 
 **El Flujo de Trabajo con Pull Request:**
 
 1.  **Termina tu trabajo en la rama:** Haz tus commits como siempre.
-    ```bash
+    ```fish
     git add .
     git commit -m "Docs: Añade la sección sobre Pull Requests"
     ```
 
 2.  **Sube tu rama a GitHub:** La primera vez que subes una rama nueva, usas la bandera `-u` para establecer un seguimiento.
-    ```bash
+    ```fish
     git push -u origin docs/actualizar-con-flujo-remoto
     ```
 
@@ -612,7 +612,7 @@ Un Pull Request es una **característica de GitHub** (no un comando de Git) que 
 
 Aquí es donde entra el comando `git pull`, el complemento de `git push`.
 
-```bash
+```fish
 # 1. Vuelve a tu rama principal
 git switch main
 
@@ -624,7 +624,7 @@ Este comando descarga el "commit de fusión" que GitHub creó y lo integra en tu
 
 Ahora solo queda un paso de limpieza: borrar la rama en tu máquina local.
 
-```bash
+```fish
 # -d es seguro, solo funciona si la rama ya fue fusionada
 git branch -d docs/actualizar-con-flujo-remoto
 ```
@@ -639,12 +639,12 @@ Una vez que hayas pegado este texto y guardado el archivo, estás en medio del f
 
 1.  **Verifica tus cambios** con `git status` y `git diff`. Verás las modificaciones que acabas de hacer.
 2.  **Guarda tu trabajo en un commit** en la rama `docs/actualizar-con-flujo-remoto`. Un buen mensaje sería:
-    ```bash
+    ```fish
     git add .
     git commit -m "Docs: Añade secciones sobre Pull Requests y flujo remoto"
     ```
 3.  **Sube la rama a GitHub** como se describe en el texto que acabas de pegar:
-    ```bash
+    ```fish
     git push -u origin docs/actualizar-con-flujo-remoto
     ```
 
@@ -658,7 +658,7 @@ Una vez que hayas pegado este texto y guardado el archivo, estás en medio del f
 
 El comando para traer los cambios remotos a tu repositorio local es `git pull`.
 
-```bash
+```fish
 git pull
 ```
 
@@ -694,7 +694,7 @@ Veamos el curso de acción correcto, paso a paso, usando nuestro nuevo framework
 ### Paso 1: Verificar el Punto de Partida
 
 Antes de hacer nada, confirmamos que nuestro trabajo previo está a salvo.
-```bash
+```fish
 git status
 ```
 El mensaje "nothing to commit, working tree clean" nos da luz verde. Nuestro último commit es nuestro punto de restauración seguro.
@@ -710,7 +710,7 @@ Procedemos a actualizar el archivo directamente.
 ### Paso 3: Observar con las Herramientas de Git
 
 No estamos a ciegas. Le pedimos a Git que nos informe de la situación.
-```bash
+```fish
 # Primero, vemos QUÉ archivo ha cambiado
 git status
 
@@ -722,7 +722,7 @@ git diff
 ### Paso 4: Preparar el Nuevo Contenido (`add`)
 
 Estamos conformes con la actualización. La preparamos para ser guardada en el historial.
-```bash
+```fish
 git add .
 ```
 Ahora el cambio está en el "Staging Area", listo para la "foto".
@@ -730,7 +730,7 @@ Ahora el cambio está en el "Staging Area", listo para la "foto".
 ### Paso 5: Crear un Nuevo Punto en la Historia (`commit`)
 
 Guardamos esta nueva versión como un nuevo punto seguro en nuestra línea de tiempo, con una descripción clara.
-```bash
+```fish
 git commit -m "Incorpora el contenido actualizado del manual"
 ```
 ¡Listo! Hemos creado una nueva versión oficial del proyecto.
@@ -739,11 +739,11 @@ git commit -m "Incorpora el contenido actualizado del manual"
 
 Aquí calmamos nuestro miedo. La versión antigua no ha desaparecido. Está en el commit anterior.
 Primero, vemos el historial:
-```bash
+```fish
 git log --oneline
 ```
 Veremos nuestro nuevo commit en la cima, y el commit anterior justo debajo. Copiamos el código (hash) del commit anterior y ejecutamos:
-```bash
+```fish
 git show HASH_DEL_COMMIT_ANTIGUO:"Control de versiones con Git.md"
 ```
 Git nos mostrará en la terminal el contenido íntegro del archivo en esa versión pasada, demostrando que sigue ahí, intacta y accesible.
@@ -752,7 +752,7 @@ Git nos mostrará en la terminal el contenido íntegro del archivo en esa versi�
 ### Paso 7: Sincronizar con la Nube (`push`)
 
 Contentos con nuestra nueva versión y sabiendo que la antigua está a salvo en el historial, subimos una copia de seguridad de nuestro trabajo a GitHub.
-```bash
+```fish
 git push
 ```
 
@@ -819,7 +819,7 @@ La conclusión es simple: si la rama solo la has usado tú, en tu ordenador, haz
 
 Estás trabajando en tu rama `feature/mi-idea`. Mientras tanto, la rama `main` ha recibido nuevos commits. Quieres actualizar tu rama con lo último de `main` antes de proponer un Pull Request.
 
-```bash
+```fish
 # 1. Asegúrate de que tu rama main está actualizada
 git switch main
 git pull
@@ -834,6 +834,13 @@ git rebase main
 #### 16.2 Git Cherry-Pick: Seleccionando Cambios Específicos
 
 #### 16.3 Git reflog: Tu Red de Seguridad
+
+#### 16.4 Alias: Atajos para tus Comandos Favoritos
+Git permite crear alias para acortar comandos. Si te cansas de escribir `git status` o `git log --oneline --graph`, puedes crear atajos.
+
+- `git config --global alias.st status` crea un alias `st` para `status`.
+- `git config --global alias.loga "log --oneline --graph"` crea un alias `loga` para un log gráfico simplificado.
+Ahora, simplemente puedes escribir `git st` o `git loga` en lugar de los comandos completos.
 
 ---
 ## Apéndice A: El Arte de Escribir un Buen Mensaje de Commit
