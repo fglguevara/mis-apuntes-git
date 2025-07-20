@@ -840,7 +840,16 @@ Git permite crear alias para acortar comandos. Si te cansas de escribir `git sta
 
 - `git config --global alias.st status` crea un alias `st` para `status`.
 - `git config --global alias.loga "log --oneline --graph"` crea un alias `loga` para un log gráfico simplificado.
-Ahora, simplemente puedes escribir `git st` o `git loga` en lugar de los comandos completos.
+- `git config --global alias.cm "commit -m"` crea un alias `cm` para  `commit -m`, permitiéndote escribir el mensaje de confirmación directamente. Por ejemplo, `git cm "Mensaje de confirmación"`.
+- `git config --global alias.br branch` crea un alias `br` para `branch`.
+- `git config --global alias.last 'log -1 HEAD'` crea un alias `last` para ver el último commit.
+- `git config --global alias.lg "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"` crea un alias `lg` para un log con formato mejorado, incluyendo hash abreviado, fecha relativa, autor y colores.
+- `git config --global alias.aac "add . && commit -m"`. Este alias te permite añadir todos los archivos modificados y crear un commit con un solo comando.  Recuerda que esta práctica puede ser peligrosa si no revisas los cambios antes de confirmarlos, así que úsala con precaución. Un ejemplo de uso sería: `git aac "Mensaje del commit"`.
+- `git config --global alias.undo "reset HEAD~1"`. Este comando deshace el último commit, manteniendo los cambios en tu directorio de trabajo.
+- `git config --global alias.empty-commit "commit --allow-empty -m"`. Permite crear un commit vacío con un mensaje específico, útil para marcar puntos en la historia del repositorio sin cambios en los archivos. Ejemplo: `git empty-commit "Marca de inicio de la fase 2"`.
+
+
+Ahora, simplemente puedes escribir `git st` o `git loga`, `git co`, `git cm`, etc. en lugar de los comandos completos.
 
 ---
 ## Apéndice A: El Arte de Escribir un Buen Mensaje de Commit
