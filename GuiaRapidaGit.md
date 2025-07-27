@@ -50,7 +50,8 @@ Pasos para configurar un proyecto desde cero.
     # Archivos temporales
     *.tmp
     *.swp
-    ```4.  **Conectar tu repositorio local con GitHub:**
+    ```
+4.  **Conectar tu repositorio local con GitHub:**
     ```bash
     # Reemplaza la URL con la tuya
     git remote add origin https://github.com/tu-usuario/tu-repo.git

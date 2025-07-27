@@ -2,56 +2,70 @@
 
 ## 1. Descripción del sistema actual del control de versiones.
 
-Hasta ahora he gestionado el control de versiones cambiando el nombre del documento y añadiéndole sufijos. Por ejemplo, "documento v1", "documento v2", "documento v3". Como mucho me atrevo a utilizar una nomenclatura que diferencia cambios menores de mayores. Así: 'documento v2.1" -cambios menores respecto de la v2- 'documento v3' -cambios mayores respecto de la v2.1
+Hasta ahora he gestionado el control de versiones cambiando el nombre del documento y añadiéndole sufijos. Por ejemplo, `documento v1`, `documento v2`, `documento v3`. La nomenclatura permite diferenciar cambios menores de mayores. Así: `documento v2.1` -cambios menores respecto de la v2- `documento v3` -cambios mayores respecto de la v2.1 y la v2- y así sucesivamente.
 
-Siendo un enfoque práctico pierdo información respecto a los cambios introducidos en cada versión. Eso sí puedo volver perfectamente a una versión anterior. Podría definir un documento explicativo `versiones.txt` que describiera los cambios realizados de una versión respecto de otra.
+Siendo un enfoque práctico, se pierde información respecto a los cambios introducidos en cada versión. Eso sí, se puede volver perfectamente a una versión anterior. Además, podría definir un documento explicativo `versiones.txt` para describir los cambios realizados de una versión respecto de otra.
 
 ## 2. Reflexión sobre el sistema actual de control de versiones
 
-Tu enfoque actual es muy lógico y, de hecho, es el primer sistema de control de versiones que casi todos hemos utilizado de forma intuitiva. Llamémoslo "Versionado por Nomenclatura". Es simple, directo y, como bien dices, te permite volver a una versión anterior sin problemas. El fichero `versiones.txt` es un añadido inteligente para mitigar una de sus grandes debilidades: la falta de contexto sobre los cambios.
+Tu enfoque actual es muy lógico y, de hecho, es el primer sistema de control de versiones que casi todos hemos utilizado de forma intuitiva. Llamémoslo "Versionado por Nomenclatura". Es simple, directo y, permite volver a una versión anterior sin problemas. El fichero `versiones.txt` es un añadido inteligente para mitigar una de sus grandes debilidades: la falta de contexto sobre los cambios.
 
-Ahora, como tu gestor de proyectos y colega, quiero que reflexionemos juntos sobre este sistema. Imagina que no soy un programa, sino que estamos sentados con un café.
 
 ## 3. Las limitaciones del sistema actual ("Versionado por Nomenclatura")
 
 Tu sistema funciona, pero tiene "fugas de información" y genera trabajo manual que, con el tiempo, se vuelve pesado.
 
-1.  **El "Qué" es ambiguo:** Tu `versiones.txt` dice: "v2.1: Corregidos errores tipográficos y mejorada la introducción". Es útil, pero... ¿qué errores exactamente? ¿Cómo era la introducción *antes* y cómo es *ahora*? Para saberlo, tendrías que abrir la v2 y la v2.1 y compararlas a ojo. Esto es lento y propenso a errores.
+1.  **El "Qué" es ambiguo:** Tu `versiones.txt` dice: "v2.1: Corregidos errores tipográficos y mejorada la introducción". Es útil, pero... ¿qué errores exactamente? ¿Cómo era la introducción *antes* y cómo es *ahora*? Para saberlo, tendrías que abrir la v2 y la v2.1 y compararlas a ojo. Esto es lento y propenso a errores. 
+
 2.  **El espacio se multiplica:** Si tu "documento" es en realidad una carpeta con varios ficheros (imágenes, textos, hojas de cálculo), cada vez que creas una nueva versión (`proyecto_v2`, `proyecto_v3`), estás duplicando *todos* los archivos, incluso los que no han cambiado. Esto consume mucho espacio innecesariamente.
 3.  **El riesgo de la "versión final definitiva (ahora sí)":** Todos hemos caído en la trampa de `informe_final.docx`, `informe_final_entregar.docx`, `informe_final_corregido_por_jefe.docx`. El sistema de nombres se rompe fácilmente y genera confusión. ¿Cuál es el bueno?
 4.  **Experimentar es arriesgado:** Quieres probar un cambio radical en la estructura del documento. Lo lógico es hacer un "Guardar como..." y llamarlo `documento_v3_prueba_estructura.docx`. Si la idea funciona, tienes que copiar y pegar manually los cambios al documento "oficial". Si no funciona, simplemente dejas ese archivo abandonado. Con el tiempo, tu directorio se llena de ramas muertas, de experimentos olvidados.
+En definitiva este sistema derive en un caos.  Es difícil saber qué cambios hay en cada versión, es imposible colaborar con otra persona, y restaurar una versión antigua es una trabajo de adivinanza.
 
 ## 4. Presentando a Git: Tu Asistente de Versiones Personal
 
-Ahora, olvida por un momento que Git es una herramienta para programadores. Piensa en Git como un asistente increíblemente meticuloso que observa tu trabajo. No guarda copias enteras de tu proyecto una y otra vez. En su lugar, hace algo mucho más inteligente: **registra únicamente los cambios**.
+Un Sistema de Control de Versiones (VCS) como Git automatiza este proceso de forma inteligente.
+
+* **No guarda copias completas del archivo**, sino que registra los "cambios" (o "instantáneas") a lo largo del tiempo.
+* **Añade un mensaje a cada cambio**, explicando qué se hizo y por qué.
+* **Crea un historial lineal y claro**, permitiéndote viajar en el tiempo a cualquier punto del historial de tu proyecto.
+
+Git funciona principalmente con tres "áreas" o "árboles":
+
+* **Directorio de Trabajo (Working Directory):** La carpeta con tus archivos, donde trabajas y editas. Es tu "escritorio desordenado".
+* **Área de Preparación (Staging Area):** Un área intermedia. Aquí colocas los cambios que has revisado y que quieres incluir en tu próxima "foto" oficial. Es como seleccionar los documentos que vas a meter en un sobre para enviar.
+* **Repositorio (.git):** La base de datos donde Git guarda de forma permanente todas las "fotos" (commits) de tu proyecto. Es el archivo histórico seguro.
+
+El flujo básico es siempre: Modificar en el Directorio de Trabajo -> Preparar en el Staging Area -> Confirmar en el Repositorio.
+Ahora, olvida por un momento que Git es una herramienta para programadores. Piensa en Git como un asistente increíblemente meticuloso que observa tu trabajo. No guarda copias enteras de tu proyecto una y otra vez (copias completas del archivo). En su lugar, hace algo mucho más inteligente: **registra únicamente los cambios**.
 
 Vamos a comparar directamente tu flujo de trabajo con el que tendrías con Git.
 
 | Característica | Tu Flujo Actual ("Versionado por Nomenclatura") | El Flujo con Git y GitHub |
 | :--- | :--- | :--- |
 | **Estructura de archivos** | Múltiples copias del mismo archivo/carpeta: `doc_v1`, `doc_v2`, `doc_v2.1`... | **Un único archivo/carpeta**: `documento`. Git gestiona el historial de forma invisible en una subcarpeta oculta llamada `.git`. Tu directorio de trabajo está siempre limpio. |
-| **Guardar un cambio** | Guardas el archivo. Creas una copia con un nuevo nombre (`doc_v3`). Abres `versiones.txt` y anotas el cambio. | Guardas el archivo. Le dices a Git: "Oye, registra este cambio". Git te pide una descripción (un "mensaje de commit"). Por ejemplo: `"Se añade el párrafo sobre impacto económico en la introducción"`. **Este mensaje es tu `versiones.txt`, pero integrado, obligatorio y ligado a ese cambio exacto.** |
+| **Guardar un cambio** | Guardas el archivo. Creas una copia con un nuevo nombre (`doc_v3`). Abres `versiones.txt` y anotas el cambio. | Guardas el archivo. Le dices a Git: "Oye, registra este cambio". Git te pide una descripción (un "mensaje de commit"). Por ejemplo: `"Se añade el párrafo sobre impacto económico en la introducción"`. Este mensaje es tu `versiones.txt`, pero integrado, obligatorio y ligado a ese cambio exacto. |
 | **Ver qué ha cambiado** | Abres `doc_v2.1` y `doc_v3` y los comparas visualmente. | Le pides a Git: "Muéstrame las diferencias entre la versión actual y la anterior". Git te mostrará, línea por línea, qué texto has añadido (en verde) y cuál has borrado (en rojo). **Tienes una precisión quirúrgica sobre el cambio.** (Esto funciona de maravilla con archivos de texto plano, como .txt, .md, .html, etc.). |
-| **Volver a una versión** | Borras el archivo actual y renombras una copia antigua. | Le dices a Git: "Quiero volver al estado de hace tres días a las 5 de la tarde". Y ¡listo! Tu archivo vuelve a ser exactamente como era en ese momento. Y no te preocupes, el historial más reciente no se borra, simplemente has "viajado en el tiempo". |
+| **Volver a una versión** | Al disponer de un historial lineal y claro te permite viajar en el tiempo a cualquier punto del historial de tu proyecto. Borras el archivo actual y renombras una copia antigua. | Le dices a Git: "Quiero volver al estado de hace tres días a las 5 de la tarde". Y ¡listo! Tu archivo vuelve a ser exactamente como era en ese momento. Y no te preocupes, el historial más reciente no se borra, simplemente has "viajado en el tiempo". |
 | **Experimentar** | Creas una copia (`doc_prueba_loca.docx`). Si funciona, copias y pegas. Si no, la abandonas. | Le dices a Git: "Crea una línea de tiempo paralela (una 'rama') para probar una idea". Trabajas en ella sin afectar a tu versión principal. ¿La idea fue buena? Le dices a Git: "Fusiona este experimento con la línea principal". Git lo hace automáticamente. ¿Fue mala? "Borra esta línea de tiempo". Sin desorden, sin archivos huérfanos. |
 | **Seguridad / Backup** | Tu disco duro. Si falla, pierdes todas las versiones. Quizás una copia en un disco externo o en Google Drive, que sincroniza la versión actual. | Tu disco duro **Y** un repositorio remoto como GitHub. GitHub no es solo una copia de la última versión; es una **copia de seguridad completa de todo el historial de tu proyecto**. Si tu ordenador explota, clonas el repositorio desde GitHub en uno nuevo y tienes absolutamente todo de vuelta, cada cambio, cada mensaje, cada versión. |
 
 ## 5. El Beneficio Esperado de la Inversión
 
-La inversión de tiempo no es en aprender un centenar de comandos, sino en interiorizar un flujo de trabajo nuevo y mucho más potente. Para tus necesidades, solo necesitas conocer 4 o 5 comandos básicos.
+La inversión de tiempo no consiste en aprender un centenar de comandos, sino en interiorizar un flujo de trabajo nuevo y mucho más potente. Para tus necesidades, solo necesitas conocer 4 o 5 comandos básicos.
 
 **El retorno de la inversión es inmediato y se manifiesta en:**
 
 *   **Claridad Mental:** Tu carpeta de trabajo estará siempre limpia. Un solo `documento`, no diez.
 *   **Confianza Absoluta:** Puedes hacer cualquier cambio, por drástico que sea, sabiendo que puedes volver al estado anterior en segundos con total precisión. Se acabó el miedo a "romper" algo.
 *   **Un Diario de Proyecto Automático:** Cada "commit" es una entrada en el diario de tu proyecto. Dentro de seis meses, podrás ver no solo *qué* cambiaste, sino *por qué* lo hiciste (gracias a tus mensajes de commit).
-*   **Profesionalización:** Estarás usando la herramienta estándar de la industria para la gestión de cualquier tipo de proyecto digital. Es una habilidad increíblemente valiosa.
+*   **Profesionalización:** Estarás usando la herramienta estándar de la industria para la gestión de cualquier tipo de proyecto digital. Es una habilidad valiosa.
 
 ---
 
 ## 6. ¡Manos a la Obra! Preparando el Terreno en GitHub
 
-¡Excelente! Estás en lo cierto con los pasos a seguir. Necesitamos dos cosas de GitHub antes de poder tocar la terminal o la línea de comandos en tu ordenador: un **repositorio** donde vivirá nuestro proyecto en la nube, y un **token** para que tu ordenador tenga permiso para hablar con ese repositorio.
+ Necesitamos dos cosas de GitHub antes de poder tocar la terminal o la línea de comandos en tu ordenador: un **repositorio** donde vivirá nuestro proyecto en la nube, y un **token** para que tu ordenador tenga permiso para hablar con ese repositorio.
 
 ### 6.1. Paso 1: Crear el Repositorio Remoto en GitHub
 
@@ -100,9 +114,8 @@ Completa estos dos pasos. Cuando tengas la **URL de tu repositorio vacío** y el
 
 Entonces, pasaremos a la parte más emocionante: abrir una terminal en tu ordenador y ejecutar los 3-4 comandos que darán vida a tu control de versiones local y lo conectarán con la nube.
 
-¡Fantástico! Ya hemos superado la parte "administrativa" y tenemos todo lo necesario para construir el puente entre tu ordenador y la nube de GitHub. Ahora viene la parte divertida, donde vemos la magia en acción.
+Ya hemos superado la parte "administrativa" y tenemos todo lo necesario para construir el puente entre tu ordenador y la nube de GitHub. Ahora viene la parte divertida, donde vemos la magia en acción.
 
-Continuemos con tus apuntes. Añadiremos la sección sobre cómo dar vida al repositorio en tu máquina local.
 
 ---
 
@@ -110,15 +123,49 @@ Continuemos con tus apuntes. Añadiremos la sección sobre cómo dar vida al rep
 
 Aquí es donde tu directorio local se convierte en un repositorio de Git "inteligente" y aprende a hablar con su gemelo en GitHub. Asumiré que ya tienes Git instalado en tu ordenador. Si no es así, puedes descargarlo desde [git-scm.com].
 
-Todo lo que sigue lo haremos desde una **terminal** o **línea de comandos**. No te asustes, verás que son solo unas pocas instrucciones muy concretas.
+Todo lo que sigue lo haremos desde una **terminal** o **línea de comandos**. 
+
+### 7.0 Configuración Global de identidad Git en una máquina
+`git --version``
+`git config --global user.name "Tu Nombre"`
+`git config --global user.email "tu@email.com"`
+Esto es necesario para los commits tenga autor.
+
+Git almacena configs en tres niveles: local (por repo), global (para tu usuario) y system (para toda la máquina). Como configuraste global, nos enfocamos ahí – es el 80% de lo que usarás.
+
+1. Ver Toda la Configuración Global
+**Por qué?** Te da una vista completa, incluyendo user.name, user.email y otras settings (como editor predeterminado).
+**Comando clave: git config --global --list
+Paso práctico:
+Abre iTerm con Fish.
+Escribe git config --global --list y presiona Enter.
+Busca líneas como:
+user.name=Tu Nombre
+user.email=tu@email.com
+Si la lista es larga, usa la búsqueda de iTerm (Cmd + F) para encontrar "user.name" o "user.email".
+
+Paso práctico:
+Abre iTerm con Fish.
+Escribe git config --global --list y presiona Enter.
+Busca líneas como:
+user.name=fglguevara
+user.email=fgonzal@omp.upv.es
+gui.recentrepo=/Users/fglguevara/ownCloud/SuperdiskTesis/Tools/git/Vanity
+init.defaultbranch=main
+
+Si la lista es larga, usa la búsqueda de iTerm (Cmd + F) para encontrar "user.name" o "user.email"
+
+
+
 
 ### 7.1. Paso 1: Preparar el Directorio Local
 
-1.  **Crea una carpeta para tu proyecto.** Puedes llamarla igual que tu repositorio en GitHub para mantener la coherencia. Por ejemplo, `mis-apuntes-git`.
+1.  **Crea una carpeta para tu proyecto.** Se recomienda llamarla igual que tu repositorio en GitHub para mantener la coherencia. Por ejemplo, `mis-apuntes-git`.
 2.  **Mete tus archivos dentro.** Coge ese archivo Markdown donde estás tomando notas y ponlo dentro de esta nueva carpeta.
 3.  **Abre una terminal DENTRO de esa carpeta.** Este paso es crucial.
     *   En Windows: Navega hasta la carpeta, haz clic derecho en un espacio en blanco y selecciona "Abrir en Terminal" o "Git Bash Here" (si lo instalaste con Git).
     *   En Mac/Linux: Abre la aplicación de Terminal, escribe `cd ` (con un espacio al final), y arrastra la carpeta de tu proyecto desde el Finder/explorador de archivos a la ventana de la terminal. Esto pegará la ruta correcta. Luego presiona Enter.
+No es necesario **desactivar el control de versiones `Git`** si simplemente dejas de trabajar en un directorio o te mueves a otro subdirectorio; Git seguirá funcionando únicamente en la carpeta(s) donde lo hayas inicializado. Si quieres dejar de usar Git en un directorio, simplemente no ejecutes más comandos de Git allí. Si deseas eliminar el control de versiones, puedes borrar la carpeta oculta `.git` dentro del directorio.
 
 ### 7.2. Paso 2: El Bautizo (`git init`)
 
@@ -130,7 +177,9 @@ Escribe el siguiente comando en tu terminal y presiona Enter:
 git init
 ```
 
-*   **¿Qué hace esto?** Este comando crea una subcarpeta oculta llamada `.git`. Ahí es donde nuestro "asistente meticuloso" (Git) guardará todo el historial, todas las versiones y toda la información del proyecto. No necesitas tocar nada dentro de esa carpeta, pero es el cerebro de tu repositorio.
+*   **¿Qué hace esto?** Este comando crea una subcarpeta oculta llamada `.git`. Ahí es donde nuestro "asistente meticuloso" (Git) guardará todo el historial, todas las versiones y     toda la información del proyecto. No necesitas tocar nada dentro de esa carpeta, pero es el cerebro de tu repositorio.
+*   No es necesario desactivar el control de versiones Git si simplemente dejas de trabajar en un directorio o te mueves a otro subdirectorio; Git seguirá funcionando únicamente en la carpeta (y subcarpetas) donde se encuentra el repositorio inicializado (es decir, donde existe el directorio oculto .git).
+*   Si ya no quieres que una carpeta en particular esté bajo control de versiones, puedes eliminar el directorio oculto `.git` dentro de esa carpeta. Esto eliminará todo el historial de versiones, pero los archivos seguirán ahí como estaban. O bien eliminar solo ciertos archivos/carpetas del cotrol sin borrar el historial completo.  Se puete utilizar .gitignore para excluir archivos específicos del control de versiones, o bien eliminar el control de versiones de un archivo específico con el comando `git rm --cached nombre_del_archivo`.
 
 ### 7.3. Paso 3: La Lista de Ignorados (`.gitignore`)
 
@@ -333,6 +382,10 @@ git log
 ```
 Verás una lista detallada de cada commit: su identificador largo (hash), el autor, la fecha y el mensaje completo. Es útil, pero a menudo es demasiada información.
 
+El `hash`del commit (técnicamente un hash SHA-1) es la "huella digital del comit". Se calcula a partir de todo lo que define a ese commit: los archivos que contiene, el mensaje, el autor, la fecha y, muy importante, el hash del commit anterior "padre". 
+ Esto significa que cada commit está vinculado al anterior, formando una cadena inmutable. Si cambias cualquier cosa en un commit, su hash cambia completamente, lo que invalida todos los commits posteriores. Es como un sello de seguridad: si alguien intenta modificar un commit antiguo, todo el historial se rompe.
+
+
 Para una vista mucho más práctica, usa la opción `--oneline`:
 ```fish
 git log --oneline
@@ -387,6 +440,7 @@ En **resumen**: `git add` no guarda nada de forma permanente. Solo prepara los c
 *   **Qué haces:** Coges la caja de envío (que ya tiene dentro los archivos que seleccionaste con `git add`), la cierras con cinta adhesiva y le escribes una etiqueta clara en el exterior que describe su contenido. Por ejemplo: "Contiene el borrador del capítulo 5 y la corrección de la introducción".
 *   **Comando:** `git commit -m "Este es el mensaje de mi etiqueta"`
 *   **Propósito:** Este es el **verdadero acto de guardar**. Creas un punto de control permanente y seguro en tu historial. La caja (el "commit") se mueve desde la zona de preparación a tu **almacén local** (tu garaje). El cambio ya está registrado para siempre en tu ordenador. **Importante:** en este punto, GitHub todavía no sabe nada de esta nueva caja.
+    *   `git commit -a -m "Mensaje"`: Este comando es un atajo que añade automáticamente todos los archivos modificados al commit, sin necesidad de hacer `git add` primero. Es útil si estás seguro de que quieres incluir todos los cambios en el commit.
 
 **En resumen: `git commit` crea un punto de guardado permanente en el historial de TU ordenador.**
 
@@ -426,7 +480,68 @@ Añadamos estas secciones a tus notas.
 
 ## 10. Viajar en el Tiempo: Cómo Corregir Errores Comunes
 
-Tarde o temprano, cometerás un error. Guardarás algo que no debías, escribirás un mensaje incorrecto o simplemente querrás deshacer un cambio. Git es tu red de seguridad.
+Tarde o temprano, cometerás un error. Guardarás algo que no debías, escribirás un mensaje incorrecto o simplemente querrás deshacer un cambio. Git es tu red de seguridad. Git ofrece varias herramientas para "deshacer" cosas y cada una sirve para un propósito distinto: Vamos a verlas en detalle y ordenadas de menor a mayor "potencia" (o carácter más destructivo o inevitable): `git commit --amend`, `git restore`(<archivo>, --staged), `git revert` y `git revert --soft`, git reset, `git reset --soft`, `git reset --hard`.
+
+### 1. `git commit --amend` Corregir el último commit.
+* **Problema que resuelve**: "He hecho un commit, pero me he dado cuenta de que he olvidado añadir un archivo o he escrito un mensaje incorrecto. Quiero corregirlo".
+* **Analogía**: Es como si hubieras enviado un paquete, pero luego te das cuenta de que olvidaste incluir un documento importante. En lugar de enviar un nuevo paquete, abres el paquete original, metes el documento que faltaba y vuelves a sellarlo con una etiqueta corregida. Es una forma elegante de arreglar errores menores en el último commit sin complicar el historial. Es la opción menos destructiva. 
+  * `git commit --amend -m "Mensaje corregido"`. Permite cambiar el mensaje del último commit sin abrir el editor de texto.
+  * `git commit --amend --no-edit`. No modifica el mensaje del commit. Es útil para añadir o quitar archivos del último commit sin cambiar el mensaje. 
+
+
+### 2. `git restore <archivo>` Descartar cambios en el Directorio de Trabajo
+* **Problema que resuelve**: "He modificado un archivo, pero no me gusta lo que he hecho. Quiero volver a la versión que está en mi último commit y descartar todos mis cambios locales en ese archivo".
+* **Analogía**: Es como arrugar una hoja de papel en la que estabas escribiendo y luego desarrugarla para volver a su estado original.
+  * `git restore .` Descarta todos los cambios en todos los archivos del directorio de trabajo. Similar al anterior, pero afecta a todos los archivos.
+
+
+### 3. `git restore --staged <archivo>` Deshacer los cambios en un archivo específico del área de trabajo, restaurando la última versión confirmada
+* **Problema que resuelve**: "He añadido un archivo al Staging Area con `git add`, pero me he dado cuenta de que no quiero incluirlo en el próximo commit".
+* **Analogía**: Es como meter un documento en una caja de envío, pero luego decides que no quieres enviarlo. Lo sacas de la caja sin cambiar el documento en sí. Mantiene los cambios en el directorio de trabajo. Es útil para quitar archivos que se añadieron accidentalmente con `git add`. 
+  * `git restore --staged .`Des-escenifica todos los archivos del Staging area.
+  * `git restore --source:<commit> <archivo>` Restaura un archivo a la versión de un commit específico. Permite volver a una versión anterior sin afectar al historial de commits.
+
+
+* ### 4. `git revert <hash_del_commit>`Revertir un commit público de forma segura
+* **Problema que resuelve**: "He subido un commit a GitHub, pero me he dado cuenta de que contiene un error grave. Quiero deshacer ese commit sin perder el historial".
+* **Analogía**: Enviar un email con un error y, en lugar de intentar hackear el servidor para borrarlo, enviar un segundo email que dice "Corrección: Por favor, ignoren el contenido del email anterior y usen esta nueva información". Es transparente y no reescribe la historia.
+  * `git revert --no-commit <hash_del_commit>` Deshace el commit pero no lo guarda inmediatamente. Permite revisar los cambios antes de hacer el commit de reversión.
+  * `git revert --no-edit <hash_del_commit>` Deshace el commit sin abrir el editor de texto para modificar el mensaje. Es útil cuando quieres revertir un commit sin cambiar el mensaje original.
+
+--- 
+Los cambios siguientes reescriben el historial de commits, por lo que **debes tener cuidado** al usarlos, son potencialmente destructivos, especialmente si ya has compartido tus commits con otros (por ejemplo, si ya has hecho `git push`).
+
+* ### 5. `git reset --soft <hash_del_commit>` Deshacer commits locales sin perder cambios.
+* **Problema que resuelve**: "He hecho varios commits, pero me he dado cuenta de que debería haber hecho uno solo. Quiero combinar esos commits sin perder los cambios".
+* **Analogía**: Es como si hubieras escrito varios borradores de un documento y decides que todos esos borradores deberían ser un solo documento final. Los borradores siguen ahí, pero ahora están en una sola versión.
+  * `git reset --mixed <commit>` Combina el último commit con el anterior, manteniendo los cambios en el área de staging. Mueve el puntero de la rama al commit esepcificado, des-escenificando los cambios pero manteniéndolos en el directorio de trabajo.
+* 
+* ### 6. `git reset --hard <hash_del_commit>` Deshacer commits y perder cambios.
+* **Problema que resuelve**: "He hecho varios commits, pero me he dado cuenta de que todo lo que he hecho es un desastre. Quiero volver a un estado anterior y perder todos los cambios desde entonces".
+* **Analogía**: Es como si hubieras estado trabajando en un proyecto de construcción y decides que todo lo que has hecho hasta ahora es un error. Llamas a la excavadora y le pides que derribe todo lo construido desde el último plano aprobado. Ahora estás de vuelta al punto anterior, pero todo lo que hiciste en el medio se ha perdido.
+  * `git reset --hard HEAD~1` Deshace el último commit y todos los cambios asociados. Es como si nunca hubieras hecho ese commit. **¡Cuidado!** Los cambios se pierden para siempre.
+Ejemplos de <commit> pueden ser HEAD~1 (el commit anterior al actual), HEAD~2 (dos commits antes), o un hash de commit específico.
+
+Recuerda que las opciones de reset que modifican el historial `(--mixed y --hard)` no deben usarse en commits que ya se han compartido con otros desarrolladores, ya que esto puede causar problemas de sincronización y pérdida de trabajo. En esos casos, `revert` es la opción más segura.
+
+
+### Regla nemotécnica
+**A.R.R.H. (Amend, Restore, Revert, Rebase -i, Hard Reset)**
+
+* `Amend` (Ajustar): Modifica el último commit. El cambio más superficial. Piensa en ajustar una tuerca.
+
+* `Restore` (Recuperar): Descarta cambios en archivos. Puede ser local o del staging area. Piensa en recuperar un archivo borrado accidentalmente.
+
+* `Revert` (Revertir): Crea un nuevo commit que deshace cambios anteriores. Seguro para el historial. Piensa en dar marcha atrás a un coche.
+
+* `Rebase -i` (Reescribir): Modifica el historial de commits. Permite reorganizar, combinar o editar commits. Piensa en reescribir un capítulo de un libro.
+
+* `Hard` (reset --hard): El más destructivo. Descarta todos los cambios y mueve el HEAD. Piensa en formatear un disco duro.
+
+Esta nemotecnia (A.R.R.H.) ordena los comandos correctamente según su potencia destructiva: amend (menor impacto), restore, revert, rebase -i y reset --hard (mayor impacto). Recuerda que debes usar reset --hard con extrema precaución.
+
+### Escenarios Prácticos de uso 
+Vamos a ver ahora una serie de escenarios prácticos para aplicar estas herramientas. Imagina que estás trabajando en un proyecto y te encuentras con diferentes situaciones donde necesitas deshacer o corregir algo. Aquí van algunos ejemplos comunes:
 
 ### Escenario 1: "Me equivoqué en el mensaje de mi ÚLTIMO commit"
 

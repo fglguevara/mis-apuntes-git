@@ -38,12 +38,13 @@ Pensemos en asignar un rol semántico (un "significado") a cada elemento para qu
         * Datos estructurados (JSON, YAML).
         * Mostrar la salida de un terminal.
 5. **Guión Simple (-) y Guión Bajo (_)**
-   * **Rol Principal**: Separador de Palabras y *Naming Conventions*. Aunque no es un elemento de estilo tipográfico en sí, es importante para la legibilidad y la claridad. Su función principal es crear nombres de archivos, variables o ramas legibles cuando no se pueden usar espacios. Las elecció entre uno y otros suele depender de la tecnología o de la convención del equipo.
+   * **Rol Principal**: Separador de Palabras y *Naming Conventions*. Aunque no es un elemento de estilo tipográfico en sí, es importante para la legibilidad y la claridad. Su función principal es crear nombres de archivos, variables o ramas legibles cuando no se pueden usar espacios. Las elección entre uno y otros suele depender de la tecnología o de la convención del equipo.
+   El guión es un separador seguro. No tiene significados especiales en los nombres de archivo para la mayoría de los sistemas operativos o servidores web. Es simplemente un carácter. Es un estándar en el mundo del desarrollo web (motores de búsqueda SEO y URLs)
    * **Casos de Uso**:    
      * **Nombres de archivos**: Es muy común usar guiones simples (estilo kebab-case). Por ejemplo: guia-estilo-marcadores.md, calculo-impuestos.js.
      * **Nombres de ramas en Git**: kebab-case es el estándar de facto. Por ejemplo: feat/nuevo-login-usuario, fix/corregir-bug-pago.
      * **Nombres de variables**: Aquí la comunidad está más dividida. Lenguajes como Python o SQL prefieren snake_case (con guion bajo): user_id, total_price. Otros, como JavaScript, prefieren camelCase (userId), evitando el separador por completo.
-    **Recomendación de Estilo**: Elige una convención y sé **consistente**. Si tu proyecto usa kebab-case para los archivos, úsalo para todos. Si usa snake_case para las variables, no lo mezcles con camelCase. La consistencia es más importante que la elección en sí.
+    **Recomendación de Estilo**: Elige una convención y sé **consistente**. Si tu proyecto usa "kebab-case" (todo en minúsculas y separando cada palabra con un guión simple -las palabras son trozos de carnas y el guió los pincha- mas parecería una brocheta) para los archivos, úsalo para todos. Si usa snake_case para las variables, no lo mezcles con camelCase. La consistencia es más importante que la elección en sí.
 ## Nivel 3: Citas y Puntuación Expresiva
 6. **Comillas Dobles** ("texto")
 * **Rol Principal**: Cita Directa. Se usan para reproducir las palabras exactas de alguien o de un texto.
@@ -66,8 +67,11 @@ No estás citando a otra persona, sino que estás distanciando una frase que rep
 ## Nivel 4: Estructura y Semántica (Clave para Prompts)
 
 9. **Listas (Numeradas 1. y con Viñetas - o *)**
-    * Rol Principal: Secuenciación y Enumeración. Para desglosar instrucciones, requisitos o puntos clave de forma ordenada y fácil de seguir. Los modelos de IA son excelentes procesando listas.
-    * Caso de Uso: Definir pasos a seguir o un conjunto de restricciones que la respuesta debe cumplir.
+    * Rol Principal: Secuenciación y Enumeración. Para desglosar instrucciones, requisitos o puntos clave de forma ordenada y fácil de seguir. Organizan la información en pasos o grupos claros, mejorando la legibilidad frente a un párrafo denso. Los modelos de IA son excelentes procesando listas.
+    * 
+    * **Caso de Uso**: Definir pasos a seguir o un conjunto de restricciones que la respuesta debe cumplir.
+      * Para secuencias ordenadas donde el número es importante, usar listas nueradas (1., 2., etc.)
+      * Para listas de elementos donde el orden no es crítico, usar viñetas (- o '*' ). Se pueden usar ambos pero extensiones como Prettier utilizan '*' para la definición de listas
 10. **Enlaces o Hipervínculos** ([texto](URL))
     * **Rol Principal**: Referencia Externa. Permite al lector acceder a información adicional o recursos relacionados. Facilitan elaborar una red de conocimiento en lugar de un documento aislado, referenciando fuentes, definiciones o recursos externos de forma limpia y semántica.
     * **Casos de Uso**: 
