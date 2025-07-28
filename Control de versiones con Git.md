@@ -1,6 +1,6 @@
 # Git- Control de versiones
 
-## 1. Descripción del sistema actual del control de versiones.
+## 1. Descripción del sistema actual del control de versiones
 
 Hasta ahora he gestionado el control de versiones cambiando el nombre del documento y añadiéndole sufijos. Por ejemplo, `documento v1`, `documento v2`, `documento v3`. La nomenclatura permite diferenciar cambios menores de mayores. Así: `documento v2.1` -cambios menores respecto de la v2- `documento v3` -cambios mayores respecto de la v2.1 y la v2- y así sucesivamente.
 
@@ -10,16 +10,15 @@ Siendo un enfoque práctico, se pierde información respecto a los cambios intro
 
 Tu enfoque actual es muy lógico y, de hecho, es el primer sistema de control de versiones que casi todos hemos utilizado de forma intuitiva. Llamémoslo "Versionado por Nomenclatura". Es simple, directo y, permite volver a una versión anterior sin problemas. El fichero `versiones.txt` es un añadido inteligente para mitigar una de sus grandes debilidades: la falta de contexto sobre los cambios.
 
-
 ## 3. Las limitaciones del sistema actual ("Versionado por Nomenclatura")
 
 Tu sistema funciona, pero tiene "fugas de información" y genera trabajo manual que, con el tiempo, se vuelve pesado.
 
-1.  **El "Qué" es ambiguo:** Tu `versiones.txt` dice: "v2.1: Corregidos errores tipográficos y mejorada la introducción". Es útil, pero... ¿qué errores exactamente? ¿Cómo era la introducción *antes* y cómo es *ahora*? Para saberlo, tendrías que abrir la v2 y la v2.1 y compararlas a ojo. Esto es lento y propenso a errores. 
+1. **El "Qué" es ambiguo:** Tu `versiones.txt` dice: "v2.1: Corregidos errores tipográficos y mejorada la introducción". Es útil, pero... ¿qué errores exactamente? ¿Cómo era la introducción *antes* y cómo es *ahora*? Para saberlo, tendrías que abrir la v2 y la v2.1 y compararlas a ojo. Esto es lento y propenso a errores.
 
-2.  **El espacio se multiplica:** Si tu "documento" es en realidad una carpeta con varios ficheros (imágenes, textos, hojas de cálculo), cada vez que creas una nueva versión (`proyecto_v2`, `proyecto_v3`), estás duplicando *todos* los archivos, incluso los que no han cambiado. Esto consume mucho espacio innecesariamente.
-3.  **El riesgo de la "versión final definitiva (ahora sí)":** Todos hemos caído en la trampa de `informe_final.docx`, `informe_final_entregar.docx`, `informe_final_corregido_por_jefe.docx`. El sistema de nombres se rompe fácilmente y genera confusión. ¿Cuál es el bueno?
-4.  **Experimentar es arriesgado:** Quieres probar un cambio radical en la estructura del documento. Lo lógico es hacer un "Guardar como..." y llamarlo `documento_v3_prueba_estructura.docx`. Si la idea funciona, tienes que copiar y pegar manually los cambios al documento "oficial". Si no funciona, simplemente dejas ese archivo abandonado. Con el tiempo, tu directorio se llena de ramas muertas, de experimentos olvidados.
+2. **El espacio se multiplica:** Si tu "documento" es en realidad una carpeta con varios ficheros (imágenes, textos, hojas de cálculo), cada vez que creas una nueva versión (`proyecto_v2`, `proyecto_v3`), estás duplicando *todos* los archivos, incluso los que no han cambiado. Esto consume mucho espacio innecesariamente.
+3. **El riesgo de la "versión final definitiva (ahora sí)":** Todos hemos caído en la trampa de `informe_final.docx`, `informe_final_entregar.docx`, `informe_final_corregido_por_jefe.docx`. El sistema de nombres se rompe fácilmente y genera confusión. ¿Cuál es el bueno?
+4. **Experimentar es arriesgado:** Quieres probar un cambio radical en la estructura del documento. Lo lógico es hacer un "Guardar como..." y llamarlo `documento_v3_prueba_estructura.docx`. Si la idea funciona, tienes que copiar y pegar manually los cambios al documento "oficial". Si no funciona, simplemente dejas ese archivo abandonado. Con el tiempo, tu directorio se llena de ramas muertas, de experimentos olvidados.
 En definitiva este sistema derive en un caos.  Es difícil saber qué cambios hay en cada versión, es imposible colaborar con otra persona, y restaurar una versión antigua es una trabajo de adivinanza.
 
 ## 4. Presentando a Git: Tu Asistente de Versiones Personal
@@ -56,10 +55,10 @@ La inversión de tiempo no consiste en aprender un centenar de comandos, sino en
 
 **El retorno de la inversión es inmediato y se manifiesta en:**
 
-*   **Claridad Mental:** Tu carpeta de trabajo estará siempre limpia. Un solo `documento`, no diez.
-*   **Confianza Absoluta:** Puedes hacer cualquier cambio, por drástico que sea, sabiendo que puedes volver al estado anterior en segundos con total precisión. Se acabó el miedo a "romper" algo.
-*   **Un Diario de Proyecto Automático:** Cada "commit" es una entrada en el diario de tu proyecto. Dentro de seis meses, podrás ver no solo *qué* cambiaste, sino *por qué* lo hiciste (gracias a tus mensajes de commit).
-*   **Profesionalización:** Estarás usando la herramienta estándar de la industria para la gestión de cualquier tipo de proyecto digital. Es una habilidad valiosa.
+* **Claridad Mental:** Tu carpeta de trabajo estará siempre limpia. Un solo `documento`, no diez.
+* **Confianza Absoluta:** Puedes hacer cualquier cambio, por drástico que sea, sabiendo que puedes volver al estado anterior en segundos con total precisión. Se acabó el miedo a "romper" algo.
+* **Un Diario de Proyecto Automático:** Cada "commit" es una entrada en el diario de tu proyecto. Dentro de seis meses, podrás ver no solo *qué* cambiaste, sino *por qué* lo hiciste (gracias a tus mensajes de commit).
+* **Profesionalización:** Estarás usando la herramienta estándar de la industria para la gestión de cualquier tipo de proyecto digital. Es una habilidad valiosa.
 
 ---
 
@@ -71,17 +70,17 @@ La inversión de tiempo no consiste en aprender un centenar de comandos, sino en
 
 Piensa en el repositorio como la "caja" o el "contenedor" central de tu proyecto.
 
-1.  Inicia sesión en [GitHub.com](https://github.com).
-2.  En la esquina superior derecha, haz clic en el icono `+` y selecciona **New repository**.
-3.  **Repository name:** Elige un nombre corto y descriptivo. Como vamos a usarlo para tus apuntes, algo como `mis-apuntes-git` o `primer-repositorio` es perfecto.
-4.  **Description (optional):** Escribe una frase corta que describa el proyecto. Ej: "Mis primeros pasos con Git y control de versiones".
-5.  **Public / Private:** Puedes elegir si quieres que cualquiera vea tu proyecto (Público) o solo tú y quien tú invites (Privado). Para empezar, **te recomiendo seleccionar Privado**.
-6.  **IMPORTANTE: No marques ninguna de estas casillas:**
-    *   `Add a README file`
-    *   `Add .gitignore`
-    *   `Choose a license`
-    *   **¿Por qué?** Queremos crear un repositorio completamente vacío. Si GitHub añade estos archivos, crea un historial inicial en la nube. Nosotros queremos crear el historial primero en nuestro ordenador y luego subirlo. Conectar un proyecto local a un repositorio que ya tiene historial es un poco más complejo, y queremos mantenerlo simple.
-7.  Haz clic en el botón verde **Create repository**.
+1. Inicia sesión en [GitHub.com](https://github.com).
+2. En la esquina superior derecha, haz clic en el icono `+` y selecciona **New repository**.
+3. **Repository name:** Elige un nombre corto y descriptivo. Como vamos a usarlo para tus apuntes, algo como `mis-apuntes-git` o `primer-repositorio` es perfecto.
+4. **Description (optional):** Escribe una frase corta que describa el proyecto. Ej: "Mis primeros pasos con Git y control de versiones".
+5. **Public / Private:** Puedes elegir si quieres que cualquiera vea tu proyecto (Público) o solo tú y quien tú invites (Privado). Para empezar, **te recomiendo seleccionar Privado**.
+6. **IMPORTANTE: No marques ninguna de estas casillas:**
+    * `Add a README file`
+    * `Add .gitignore`
+    * `Choose a license`
+    * **¿Por qué?** Queremos crear un repositorio completamente vacío. Si GitHub añade estos archivos, crea un historial inicial en la nube. Nosotros queremos crear el historial primero en nuestro ordenador y luego subirlo. Conectar un proyecto local a un repositorio que ya tiene historial es un poco más complejo, y queremos mantenerlo simple.
+7. Haz clic en el botón verde **Create repository**.
 
 ¡Listo! Ahora verás una página con instrucciones y una URL. La que nos interesa es la que empieza por `https://...`. Cópiala, la necesitaremos en un momento.
 
@@ -89,20 +88,20 @@ Piensa en el repositorio como la "caja" o el "contenedor" central de tu proyecto
 
 Estás totalmente en lo cierto, esta es la forma moderna y segura de autenticarse. Antes usábamos nuestra contraseña de GitHub, pero eso era poco seguro. Un token es como una contraseña de un solo uso o para una aplicación específica.
 
-1.  En GitHub, haz clic en tu foto de perfil (esquina superior derecha) y ve a **Settings**.
-2.  En el menú de la izquierda, baja del todo y haz clic en **Developer settings**.
-3.  En el nuevo menú de la izquierda, haz clic en **Personal access tokens** y luego en **Tokens (classic)**.
-4.  Haz clic en el botón **Generate new token** y selecciona **Generate new token (classic)**.
-5.  **Note:** Dale un nombre que te recuerde para qué es. Por ejemplo: `Token para Git en mi PC`.
-6.  **Expiration:** Por seguridad, los tokens caducan. 30 o 90 días es una buena opción. Siempre puedes generar otro.
-7.  **Select scopes:** Esta es la parte más importante. Aquí defines qué permisos le das a este token. Para lo que queremos hacer (subir y bajar cambios de nuestros repositorios), solo necesitas marcar **la casilla principal que dice `repo`**. Al marcarla, se seleccionarán automáticamente todos sus permisos secundarios. Es todo lo que necesitas.
-8.  Baja hasta el final y haz clic en **Generate token**.
+1. En GitHub, haz clic en tu foto de perfil (esquina superior derecha) y ve a **Settings**.
+2. En el menú de la izquierda, baja del todo y haz clic en **Developer settings**.
+3. En el nuevo menú de la izquierda, haz clic en **Personal access tokens** y luego en **Tokens (classic)**.
+4. Haz clic en el botón **Generate new token** y selecciona **Generate new token (classic)**.
+5. **Note:** Dale un nombre que te recuerde para qué es. Por ejemplo: `Token para Git en mi PC`.
+6. **Expiration:** Por seguridad, los tokens caducan. 30 o 90 días es una buena opción. Siempre puedes generar otro.
+7. **Select scopes:** Esta es la parte más importante. Aquí defines qué permisos le das a este token. Para lo que queremos hacer (subir y bajar cambios de nuestros repositorios), solo necesitas marcar **la casilla principal que dice `repo`**. Al marcarla, se seleccionarán automáticamente todos sus permisos secundarios. Es todo lo que necesitas.
+8. Baja hasta el final y haz clic en **Generate token**.
 
 **¡¡MÁXIMA ATENCIÓN!!**
 GitHub te mostrará el token **una sola vez**. En cuanto abandones o refresques la página, desaparecerá para siempre.
 
-*   **Copia la cadena de letras y números (empieza por `ghp_...`) inmediatamente.**
-*   **Pégala en un lugar seguro y temporal.** Un bloc de notas, un gestor de contraseñas... donde sea, pero que no se te pierda en los próximos 10 minutos.
+* **Copia la cadena de letras y números (empieza por `ghp_...`) inmediatamente.**
+* **Pégala en un lugar seguro y temporal.** Un bloc de notas, un gestor de contraseñas... donde sea, pero que no se te pierda en los próximos 10 minutos.
 
 Cuando tu ordenador te pida la contraseña para conectar con GitHub, no pondrás tu contraseña real, sino que pegarás este token.
 
@@ -116,22 +115,22 @@ Entonces, pasaremos a la parte más emocionante: abrir una terminal en tu ordena
 
 Ya hemos superado la parte "administrativa" y tenemos todo lo necesario para construir el puente entre tu ordenador y la nube de GitHub. Ahora viene la parte divertida, donde vemos la magia en acción.
 
-
 ---
 
 ## 7. Dando Vida al Repositorio Local y Conectándolo a GitHub
 
 Aquí es donde tu directorio local se convierte en un repositorio de Git "inteligente" y aprende a hablar con su gemelo en GitHub. Asumiré que ya tienes Git instalado en tu ordenador. Si no es así, puedes descargarlo desde [git-scm.com].
 
-Todo lo que sigue lo haremos desde una **terminal** o **línea de comandos**. 
+Todo lo que sigue lo haremos desde una **terminal** o **línea de comandos**.
 
 ### 7.0 Configuración Global de identidad Git en una máquina
+
 `git --version``
 `git config --global user.name "Tu Nombre"`
-`git config --global user.email "tu@email.com"`
+`git config --global user.email [tu@email.com] `
 Esto es necesario para los commits tenga autor.
 
-Git almacena configs en tres niveles: local (por repo), global (para tu usuario) y system (para toda la máquina). Como configuraste global, nos enfocamos ahí – es el 80% de lo que usarás.
+Git almacena configs en tres niveles: local (por repo), global (para tu usuario) y system (para toda la máquina). Como configuraste global, nos enfocamos ahí, es el 80% de lo que usarás.
 
 1. Ver Toda la Configuración Global
 **Por qué?** Te da una vista completa, incluyendo user.name, user.email y otras settings (como editor predeterminado).
@@ -141,7 +140,7 @@ Abre iTerm con Fish.
 Escribe git config --global --list y presiona Enter.
 Busca líneas como:
 user.name=Tu Nombre
-user.email=tu@email.com
+user.email= tu@email.com
 Si la lista es larga, usa la búsqueda de iTerm (Cmd + F) para encontrar "user.name" o "user.email".
 
 Paso práctico:
@@ -155,16 +154,13 @@ init.defaultbranch=main
 
 Si la lista es larga, usa la búsqueda de iTerm (Cmd + F) para encontrar "user.name" o "user.email"
 
-
-
-
 ### 7.1. Paso 1: Preparar el Directorio Local
 
-1.  **Crea una carpeta para tu proyecto.** Se recomienda llamarla igual que tu repositorio en GitHub para mantener la coherencia. Por ejemplo, `mis-apuntes-git`.
-2.  **Mete tus archivos dentro.** Coge ese archivo Markdown donde estás tomando notas y ponlo dentro de esta nueva carpeta.
-3.  **Abre una terminal DENTRO de esa carpeta.** Este paso es crucial.
-    *   En Windows: Navega hasta la carpeta, haz clic derecho en un espacio en blanco y selecciona "Abrir en Terminal" o "Git Bash Here" (si lo instalaste con Git).
-    *   En Mac/Linux: Abre la aplicación de Terminal, escribe `cd ` (con un espacio al final), y arrastra la carpeta de tu proyecto desde el Finder/explorador de archivos a la ventana de la terminal. Esto pegará la ruta correcta. Luego presiona Enter.
+1. **Crea una carpeta para tu proyecto.** Se recomienda llamarla igual que tu repositorio en GitHub para mantener la coherencia. Por ejemplo, `mis-apuntes-git`.
+2. **Mete tus archivos dentro.** Coge ese archivo Markdown donde estás tomando notas y ponlo dentro de esta nueva carpeta.
+3. **Abre una terminal DENTRO de esa carpeta.** Este paso es crucial.
+    * En Windows: Navega hasta la carpeta, haz clic derecho en un espacio en blanco y selecciona "Abrir en Terminal" o "Git Bash Here" (si lo instalaste con Git).
+    * En Mac/Linux: Abre la aplicación de Terminal, escribe `cd ` (con un espacio al final), y arrastra la carpeta de tu proyecto desde el Finder/explorador de archivos a la ventana de la terminal. Esto pegará la ruta correcta. Luego presiona Enter.
 No es necesario **desactivar el control de versiones `Git`** si simplemente dejas de trabajar en un directorio o te mueves a otro subdirectorio; Git seguirá funcionando únicamente en la carpeta(s) donde lo hayas inicializado. Si quieres dejar de usar Git en un directorio, simplemente no ejecutes más comandos de Git allí. Si deseas eliminar el control de versiones, puedes borrar la carpeta oculta `.git` dentro del directorio.
 
 ### 7.2. Paso 2: El Bautizo (`git init`)
@@ -177,9 +173,9 @@ Escribe el siguiente comando en tu terminal y presiona Enter:
 git init
 ```
 
-*   **¿Qué hace esto?** Este comando crea una subcarpeta oculta llamada `.git`. Ahí es donde nuestro "asistente meticuloso" (Git) guardará todo el historial, todas las versiones y     toda la información del proyecto. No necesitas tocar nada dentro de esa carpeta, pero es el cerebro de tu repositorio.
-*   No es necesario desactivar el control de versiones Git si simplemente dejas de trabajar en un directorio o te mueves a otro subdirectorio; Git seguirá funcionando únicamente en la carpeta (y subcarpetas) donde se encuentra el repositorio inicializado (es decir, donde existe el directorio oculto .git).
-*   Si ya no quieres que una carpeta en particular esté bajo control de versiones, puedes eliminar el directorio oculto `.git` dentro de esa carpeta. Esto eliminará todo el historial de versiones, pero los archivos seguirán ahí como estaban. O bien eliminar solo ciertos archivos/carpetas del cotrol sin borrar el historial completo.  Se puete utilizar .gitignore para excluir archivos específicos del control de versiones, o bien eliminar el control de versiones de un archivo específico con el comando `git rm --cached nombre_del_archivo`.
+* **¿Qué hace esto?** Este comando crea una subcarpeta oculta llamada `.git`. Ahí es donde nuestro "asistente meticuloso" (Git) guardará todo el historial, todas las versiones y     toda la información del proyecto. No necesitas tocar nada dentro de esa carpeta, pero es el cerebro de tu repositorio.
+* No es necesario desactivar el control de versiones Git si simplemente dejas de trabajar en un directorio o te mueves a otro subdirectorio; Git seguirá funcionando únicamente en la carpeta (y subcarpetas) donde se encuentra el repositorio inicializado (es decir, donde existe el directorio oculto .git).
+* Si ya no quieres que una carpeta en particular esté bajo control de versiones, puedes eliminar el directorio oculto `.git` dentro de esa carpeta. Esto eliminará todo el historial de versiones, pero los archivos seguirán ahí como estaban. O bien eliminar solo ciertos archivos/carpetas del cotrol sin borrar el historial completo.  Se puete utilizar .gitignore para excluir archivos específicos del control de versiones, o bien eliminar el control de versiones de un archivo específico con el comando `git rm --cached nombre_del_archivo`.
 
 ### 7.3. Paso 3: La Lista de Ignorados (`.gitignore`)
 
@@ -188,7 +184,7 @@ Como te comenté, hay ciertos archivos que no queremos guardar en nuestro histor
 1.  **Crea un archivo de texto** dentro de tu carpeta de proyecto y nómbralo exactamente así: `.gitignore` (sí, empieza con un punto).
 2.  **Ábrelo con un editor de texto** y añade contenido. Para un proyecto de documentación, un buen punto de partida es ignorar los archivos de sistema comunes:
 
-    ```
+    ```fish 
     # Archivos de sistema operativo
     .DS_Store
     Thumbs.db
@@ -198,16 +194,16 @@ Como te comenté, hay ciertos archivos que no queremos guardar en nuestro histor
     *.swp
     ```
 
-*   **¿Qué hace esto?** Cualquier archivo o patrón que escribas en `.gitignore` será completamente invisible para Git. Es como darle a tu asistente una lista de cosas en las que no debe fijarse.
+* **¿Qué hace esto?** Cualquier archivo o patrón que escribas en `.gitignore` será completamente invisible para Git. Es como darle a tu asistente una lista de cosas en las que no debe fijarse.
 
 ### 7.4. Paso 4: Tu Primer "Guardado" (`add` y `commit`)
 
 Este es el flujo de trabajo que repetirás cada vez que quieras guardar un punto de control. Consta de dos pasos:
 
-1.  **Preparar los archivos para la "foto" (`git add`)**: Le dices a Git qué cambios específicos quieres incluir en el próximo punto de guardado. 
+1. **Preparar los archivos para la "foto" (`git add`)**: Le dices a Git qué cambios específicos quieres incluir en el próximo punto de guardado.
   ` git add . `
 
-2.  **Tomar la "foto" y describirla (`git commit`)**: Guardas permanentemente esos cambios en el historial con un mensaje que explica qué hiciste.
+2. **Tomar la "foto" y describirla (`git commit`)**: Guardas permanentemente esos cambios en el historial con un mensaje que explica qué hiciste.
 
 En tu terminal, ejecuta estos dos comandos, uno después del otro:
 
@@ -219,31 +215,31 @@ git add .
 git commit -m "Commit inicial: Creación del proyecto y notas iniciales"
 ```
 
-*   **¿Qué hemos hecho?** Acabas de crear la **primera versión oficial** de tu proyecto en tu historial local. El mensaje `"Commit inicial..."` es tu nuevo `versiones.txt`, pero ligado de forma precisa e imborrable a este momento exacto.
+* **¿Qué hemos hecho?** Acabas de crear la **primera versión oficial** de tu proyecto en tu historial local. El mensaje `"Commit inicial..."` es tu nuevo `versiones.txt`, pero ligado de forma precisa e imborrable a este momento exacto.
 
 ### 7.5. Paso 5: Conectar con la Nube y Subir tu Trabajo (`remote` y `push`)
 
 Ya tienes el historial en tu ordenador. Ahora vamos a conectarlo con esa "caja fuerte" vacía que creamos en GitHub y a subirle una copia.
 
-1.  **Enseña a tu repositorio local la dirección del remoto:**
-    *   Coge la URL de tu repositorio que copiaste de GitHub (la que termina en `.git`).
-    *   Ejecuta este comando, **reemplazando `URL_DE_TU_REPOSITORIO`** con tu URL:
+1. **Enseña a tu repositorio local la dirección del remoto:**
+    * Coge la URL de tu repositorio que copiaste de GitHub (la que termina en `.git`).
+    * Ejecuta este comando, **reemplazando `URL_DE_TU_REPOSITORIO`** con tu URL:
 
     ```fish
     git remote add origin URL_DE_TU_REPOSITORIO
     ```
-    *   *Explicación*: `remote add` añade un control remoto. `origin` es el nombre corto que, por convención, le damos a nuestra URL principal.
+    * *Explicación*: `remote add` añade un control remoto. `origin` es el nombre corto que, por convención, le damos a nuestra URL principal.
 
-2.  **Renombra tu línea de tiempo principal a `main`:** Es una buena práctica moderna.
+2. **Renombra tu línea de tiempo principal a `main`:** Es una buena práctica moderna.
     ```fish
     git branch -M main
     ```
 
-3.  **Sube tu historial a GitHub (`git push`):**
+3. **Sube tu historial a GitHub (`git push`):**
     ```fish
     git push -u origin main
     ```
-    *   *Explicación*: 
+    * *Explicación*: 
   Al realizar un commit, tu repositorio en la carpeta .git está actualizado y se disponde de un punto de restauración seguro en tu máquina. Pero si el disco duro fallara se perdería el trabajo. Para sincronizar la historia local con el directorio en remotoen Github, asegurando una **copia de seguridad completa** se utiliza el comando `push` que significa "empujar" o "subir". Le estás diciendo a Git: "sube el contenido de mi línea de tiempo local `main` al destino `origin`". Continuando con la analogía, es el "camión de reparto" que lleva tus cajas selladas ('commits') desde tu almacén local a la fortaleza segura de GitHub.
   La bandera `-u` es especial para la primera vez, y crea un enlace para que en el futuro solo necesites escribir `git push`.
 
@@ -396,21 +392,21 @@ a1b2c3d (HEAD -> main) Añadida la sección sobre git status y diff
 f1e2d3c Reestructura el capítulo de 'Primeros Pasos'
 1a2b3c4 Commit inicial: Creación del proyecto y notas iniciales
 ```
-*   **`a1b2c3d`**: El identificador corto y único de cada commit.
-*   **`(HEAD -> main)`**: Te indica dónde estás ahora mismo (en la punta de la rama `main`).
-*   **`Añadida la sección...`**: El mensaje de commit, tu titular del cambio.
+* **`a1b2c3d`**: El identificador corto y único de cada commit.
+* **`(HEAD -> main)`**: Te indica dónde estás ahora mismo (en la punta de la rama `main`).
+* **`Añadida la sección...`**: El mensaje de commit, tu titular del cambio.
 
 ### Resumen Práctico
 
-*   **¿Quiero saber si he cambiado algo?** -> `git status`
-*   **¿Quiero saber qué he cambiado exactamente?** -> `git diff`
-*   **¿Quiero ver el historial de cambios?** -> `git log --oneline`
+* **¿Quiero saber si he cambiado algo?** -> `git status`
+* **¿Quiero saber qué he cambiado exactamente?** -> `git diff`
+* **¿Quiero ver el historial de cambios?** -> `git log --oneline`
 
 Ahora que has visto los cambios, el siguiente paso lógico sería guardarlos. ¿Recuerdas el ciclo?
 
-1.  `git add .` (para preparar los cambios que te mostró `git status`)
-2.  `git commit -m "Añadida la sección sobre git status y diff"` (para guardar la "foto")
-3.  `git push` (para subir la nueva versión a tu copia de seguridad en GitHub)
+1. `git add .` (para preparar los cambios que te mostró `git status`)
+2. `git commit -m "Añadida la sección sobre git status y diff"` (para guardar la "foto")
+3. `git push` (para subir la nueva versión a tu copia de seguridad en GitHub)
 
 Este ciclo (`modificar -> status/diff/log -> add -> commit -> push`) es el 90% del uso diario de Git para un usuario individual. ¡Lo estás haciendo genial!
 
@@ -420,10 +416,10 @@ Imagina que tu proyecto no es una carpeta en tu ordenador, sino que estás organ
 
 En este escenario, tienes tres áreas de trabajo:
 
-1.  **Tu Mesa de Trabajo (El Directorio de Trabajo):** Aquí es donde tienes todos los documentos y herramientas. Modificas los archivos, escribes, borras, creas... es tu zona de "caos" creativo.
-2.  **La Caja de Envío (El "Staging Area"):** Es una caja de cartón vacía que tienes al lado de la mesa. Antes de sellarla, decides qué documentos de tu mesa vas a meter dentro para este envío en particular.
-3.  **Tu Almacén Local (El Repositorio Local, la carpeta `.git`):** Es una estantería en tu garaje. Aquí guardas todas las cajas que ya has sellado y etiquetado, listas para que el camión de reparto se las lleve. Están a salvo dentro de tu casa.
-4.  **El Almacén Central (El Repositorio Remoto en GitHub):** Es el almacén de alta seguridad al que envías tus paquetes para tener una copia perfecta y accesible desde cualquier lugar.
+1. **Tu Mesa de Trabajo (El Directorio de Trabajo):** Aquí es donde tienes todos los documentos y herramientas. Modificas los archivos, escribes, borras, creas... es tu zona de "caos" creativo.
+2. **La Caja de Envío (El "Staging Area"):** Es una caja de cartón vacía que tienes al lado de la mesa. Antes de sellarla, decides qué documentos de tu mesa vas a meter dentro para este envío en particular.
+3. **Tu Almacén Local (El Repositorio Local, la carpeta `.git`):** Es una estantería en tu garaje. Aquí guardas todas las cajas que ya has sellado y etiquetado, listas para que el camión de reparto se las lleve. Están a salvo dentro de tu casa.
+4. **El Almacén Central (El Repositorio Remoto en GitHub):** Es el almacén de alta seguridad al que envías tus paquetes para tener una copia perfecta y accesible desde cualquier lugar.
 
 Ahora, veamos qué hace cada comando en esta analogía.
 
@@ -443,6 +439,11 @@ En **resumen**: `git add` no guarda nada de forma permanente. Solo prepara los c
     *   `git commit -a -m "Mensaje"`: Este comando es un atajo que añade automáticamente todos los archivos modificados al commit, sin necesidad de hacer `git add` primero. Es útil si estás seguro de que quieres incluir todos los cambios en el commit.
 
 **En resumen: `git commit` crea un punto de guardado permanente en el historial de TU ordenador.**
+
+#### `stash` alternativa temporal a `commit`
+`git stash` ofrece una alternativa a `git commit` para guardar cambios temporalmente sin modificar el historial de commits. 
+Mientras que git commit guarda los cambios de forma permanente en el repositorio, `git stash` los "esconde" en un espacio aparte, permitiéndote limpiar tu directorio de trabajo o cambiar de rama sin perder tu progreso. 
+Puedes recuperar los cambios guardados con git stash pop o git stash apply cuando los necesites. Es ideal para situaciones donde no quieres commitar cambios incompletos o cuando necesitas cambiar de contexto rápidamente.
 
 ### 3. `git push` - "Enviar el paquete al almacén central"
 
@@ -1011,6 +1012,6 @@ Este cambio divide el contenido en tres secciones distintas y numeradas,
 siguiendo un flujo lógico para guiar al nuevo usuario desde cero hasta
 tener el programa funcionando.
 ```
-*   **Titular:** Claro, imperativo, dice el *qué* y el *porqué* superficial.
-*   **Línea en blanco:** Crucial para separar asunto y cuerpo.
-*   **Cuerpo:** Explica el *contexto* (problema) y la *solución* (por qué fue necesario el trabajo).
+* **Titular:** Claro, imperativo, dice el *qué* y el *porqué* superficial.
+* **Línea en blanco:** Crucial para separar asunto y cuerpo.
+* **Cuerpo:** Explica el *contexto* (problema) y la *solución* (por qué fue necesario el trabajo).
