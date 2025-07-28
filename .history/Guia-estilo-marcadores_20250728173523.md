@@ -33,29 +33,29 @@ La negrita permite que la información crítica sea imposible de pasar por alto,
 
 1. **Comilla Invertida o Backtick** (`código`)
 
-   - **Rol Principal: Delimitador Técnico**. Su función es sagrada en la `documentación técnica`. Separa el "lenguaje humano" del "lenguaje de la máquina". Es para fragmentos cortos y específicos, no para párrafos enteros.
-   - **Casos de Uso:**
-     - **Comandos** de **terminal**: git status, ls -la.
-     - Nombres de **archivos** o **carpetas**: `README.md`, .`git/.`
-     - Fragmentos de código: `const x = 10;`.
-     - Conceptos técnicos específicos de una herramienta: La `Staging Area`, la rama `main`, un `commit`. Por ejemplo, nombres de 'branches'
+    - **Rol Principal: Delimitador Técnico**. Su función es sagrada en la `documentación técnica`. Separa el "lenguaje humano" del "lenguaje de la máquina". Es para fragmentos cortos y específicos, no para párrafos enteros.
+  - **Casos de Uso:**
+    - **Comandos** de **terminal**: git status, ls -la.
+    - Nombres de **archivos** o **carpetas**: `README.md`, .`git/.`
+    - Fragmentos de código: `const x = 10;`.
+    - Conceptos técnicos específicos de una herramienta: La `Staging Area`, la rama `main`, un `commit`. Por ejemplo, nombres de 'branches'
 
 1. **Bloque de Código (Triple Comilla Invertida ```)**
 
-   - **Rol Principal**: Aislamiento de Contenido Literal. Encapsula múltiples líneas de texto que deben ser tratadas como un bloque intacto, preservando espacios y saltos de línea, y sin ser interpretado como instrucción.
-   - **Casos de Uso**:
-     - Fragmentos de código fuente.
-     - Datos estructurados (JSON, YAML).
-     - Mostrar la salida de un terminal.
+- **Rol Principal**: Aislamiento de Contenido Literal. Encapsula múltiples líneas de texto que deben ser tratadas como un bloque intacto, preservando espacios y saltos de línea, y sin ser interpretado como instrucción.
+- **Casos de Uso**:
+  - Fragmentos de código fuente.
+  - Datos estructurados (JSON, YAML).
+  - Mostrar la salida de un terminal.
 
-1. **Guión Simple (-) y Guión Bajo (\_)**
+3. **Guión Simple (-) y Guión Bajo (\_)**
    - **Rol Principal**: Separador de Palabras y _Naming Conventions_. Aunque no es un elemento de estilo tipográfico en sí, es importante para la legibilidad y la claridad. Su función principal es crear nombres de archivos, variables o ramas legibles cuando no se pueden usar espacios. Las elección entre uno y otros suele depender de la tecnología o de la convención del equipo.
      El guión es un separador seguro. No tiene significados especiales en los nombres de archivo para la mayoría de los sistemas operativos o servidores web. Es simplemente un carácter. Es un estándar en el mundo del desarrollo web (motores de búsqueda SEO y URLs)
    - **Casos de Uso**:
      - **Nombres de archivos**: Es muy común usar guiones simples (estilo kebab-case). Por ejemplo: guia-estilo-marcadores.md, calculo-impuestos.js.
      - **Nombres de ramas en Git**: kebab-case es el estándar de facto. Por ejemplo: feat/nuevo-login-usuario, fix/corregir-bug-pago.
      - **Nombres de variables**: Aquí la comunidad está más dividida. Lenguajes como Python o SQL prefieren snake_case (con guion bajo): user_id, total_price. Otros, como JavaScript, prefieren camelCase (userId), evitando el separador por completo.
-     - **Recomendación de Estilo**: Elige una convención y sé **consistente**. Si tu proyecto usa "kebab-case" (todo en minúsculas y separando cada palabra con un guión simple -las palabras son trozos de carnas y el guió los pincha- mas parecería una brocheta) para los archivos, úsalo para todos. Si usa snake_case para las variables, no lo mezcles con camelCase. La consistencia es más importante que la elección en sí.
+       **Recomendación de Estilo**: Elige una convención y sé **consistente**. Si tu proyecto usa "kebab-case" (todo en minúsculas y separando cada palabra con un guión simple -las palabras son trozos de carnas y el guió los pincha- mas parecería una brocheta) para los archivos, úsalo para todos. Si usa snake_case para las variables, no lo mezcles con camelCase. La consistencia es más importante que la elección en sí.
 
 ## Nivel 3: Citas y Puntuación Expresiva
 
@@ -92,17 +92,17 @@ La negrita permite que la información crítica sea imposible de pasar por alto,
      - Para secuencias ordenadas donde el número es importante, usar listas nueradas (1., 2., etc.)
      - Para listas de elementos donde el orden no es crítico, usar viñetas (- o '_' ). Se pueden usar ambos pero extensiones como Prettier utilizan '_' para la definición de listas
 
-1. **Enlaces o Hipervínculos** ([texto](URL))
+2. **Enlaces o Hipervínculos** ([texto](URL))
    - **Rol Principal**: Referencia Externa. Permite al lector acceder a información adicional o recursos relacionados. Facilitan elaborar una red de conocimiento en lugar de un documento aislado, referenciando fuentes, definiciones o recursos externos de forma limpia y semántica.
    - **Casos de Uso**:
    - Incluir documentación, tutoriales o artículos relevantes que complementen el contenido principal.
      - **Citar una fuente**: "Según la [documentación oficial de Mozilla](enlace), el elemento <section> representa una sección temática de un documento".
      - **Navegación interna**: (En plataformas que lo soportan)
      - **Clarificar un término**: "Usaremos el patrón _Factory_, puedes leer más sobre él en este [articulo de Refactoring Guru](https://refactoring.guru/es/design-patterns/factory-method)".
-1. **Líneas en Blanco**
+3. **Líneas en Blanco**
    - **Rol Principal**: Separador de Bloques Conceptuales. Es la señal visual y estructural más fuerte para separar ideas. Indica al lector (humano o IA) que un bloque de pensamiento ha terminado y empieza otro.
    - **Caso de Uso**: En prompts, es esencial para separar Rol, Instrucciones, Datos de Entrada y Formato de Salida.
-1. **Comillas Angulares (< >) y Etiquetas XML (<tag></tag>)**
+4. **Comillas Angulares (< >) y Etiquetas XML (<tag></tag>)**
    - **Rol Principal**: Etiquetado Semántico y Variables. El método más explícito y robusto para estructurar una petición a una IA.
    - **Casos de Uso**:
      - Como variable o placeholder: Crea un resumen sobre <tema>.

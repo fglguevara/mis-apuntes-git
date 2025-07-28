@@ -92,17 +92,17 @@ La negrita permite que la información crítica sea imposible de pasar por alto,
      - Para secuencias ordenadas donde el número es importante, usar listas nueradas (1., 2., etc.)
      - Para listas de elementos donde el orden no es crítico, usar viñetas (- o '_' ). Se pueden usar ambos pero extensiones como Prettier utilizan '_' para la definición de listas
 
-1. **Enlaces o Hipervínculos** ([texto](URL))
+2. **Enlaces o Hipervínculos** ([texto](URL))
    - **Rol Principal**: Referencia Externa. Permite al lector acceder a información adicional o recursos relacionados. Facilitan elaborar una red de conocimiento en lugar de un documento aislado, referenciando fuentes, definiciones o recursos externos de forma limpia y semántica.
    - **Casos de Uso**:
    - Incluir documentación, tutoriales o artículos relevantes que complementen el contenido principal.
      - **Citar una fuente**: "Según la [documentación oficial de Mozilla](enlace), el elemento <section> representa una sección temática de un documento".
      - **Navegación interna**: (En plataformas que lo soportan)
      - **Clarificar un término**: "Usaremos el patrón _Factory_, puedes leer más sobre él en este [articulo de Refactoring Guru](https://refactoring.guru/es/design-patterns/factory-method)".
-1. **Líneas en Blanco**
+3. **Líneas en Blanco**
    - **Rol Principal**: Separador de Bloques Conceptuales. Es la señal visual y estructural más fuerte para separar ideas. Indica al lector (humano o IA) que un bloque de pensamiento ha terminado y empieza otro.
    - **Caso de Uso**: En prompts, es esencial para separar Rol, Instrucciones, Datos de Entrada y Formato de Salida.
-1. **Comillas Angulares (< >) y Etiquetas XML (<tag></tag>)**
+4. **Comillas Angulares (< >) y Etiquetas XML (<tag></tag>)**
    - **Rol Principal**: Etiquetado Semántico y Variables. El método más explícito y robusto para estructurar una petición a una IA.
    - **Casos de Uso**:
      - Como variable o placeholder: Crea un resumen sobre <tema>.
